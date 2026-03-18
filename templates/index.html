@@ -7,7 +7,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Georgia, serif;
             margin: 0;
             background: #f5f5f5;
         }
@@ -29,10 +29,11 @@
 
         .tab {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: none;
             cursor: pointer;
             background: #ddd;
+            font-size: 16px;
         }
 
         .active {
@@ -57,6 +58,19 @@
             border: none;
         }
 
+        .reading {
+            background: white;
+            padding: 18px;
+            border-radius: 6px;
+            margin-top: 15px;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .reading h3 {
+            margin-top: 0;
+        }
+
         .result {
             margin-top: 15px;
             padding: 10px;
@@ -65,7 +79,9 @@
         }
 
         mark {
-            background: yellow;
+            background: #ffe066;
+            padding: 2px 4px;
+            border-radius: 3px;
             font-weight: bold;
         }
 
@@ -79,18 +95,19 @@
             display: none;
         }
 
-        .reading {
-            background: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-            line-height: 1.6;
+        .footnotes {
+            margin-top: 30px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
         }
 
         .footer {
             font-size: 12px;
             color: gray;
-            margin-top: 20px;
+            margin-top: 25px;
         }
     </style>
 </head>
@@ -173,7 +190,28 @@
             return;
         }
 
-        readingDiv.innerHTML = `<h3>${data.reference}</h3><p>${data.text}</p>`;
+        let text = data.text;
+
+        let mainText = text;
+        let footnotes = "";
+
+        if (text.includes("Footnotes")) {
+            const parts = text.split("Footnotes");
+            mainText = parts[0];
+            footnotes = parts[1];
+        }
+
+        readingDiv.innerHTML = `
+            <h3>${data.reference}</h3>
+            <p>${mainText}</p>
+
+            ${footnotes ? `
+                <div class="footnotes">
+                    <strong>Footnotes</strong>
+                    <p>${footnotes}</p>
+                </div>
+            ` : ""}
+        `;
     }
 
     // 🔍 SEARCH
