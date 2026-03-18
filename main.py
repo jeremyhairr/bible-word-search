@@ -3,9 +3,10 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 import requests
 import os
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 # Templates (HTML)
 templates = Jinja2Templates(directory="templates")
 
