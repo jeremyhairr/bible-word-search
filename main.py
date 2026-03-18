@@ -1,46 +1,44 @@
-from fastapi import FastAPI
-import sqlite3
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.templating import Jinja2Templates
 import requests
+import os
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+
+ESV_API_KEY = os.getenv("ESV_API_KEY")
 
 
 # -----------------------------
-# 🔎 KJV SEARCH (LOCAL DATABASE)
+# 🌐 ESV SEARCH (PAGINATED)
 # -----------------------------
-def search_bible(query: str):
-    conn = sqlite3.connect("bible.db")
-    cursor = conn.cursor()
+def fetch_esv_page(query: str, page: int):
+    url = "https://api.esv.org/v3/passage/search/"
 
-    cursor.execute(
-        """
-        SELECT book, chapter, verse, text
-        FROM verses
-        WHERE text LIKE ?
-        LIMIT 20
-    """,
-        ("%" + query + "%",),
-    )
+    params = {"q": query, "page-size": 50, "page": page}  # keeps you well under limits
 
-    results = cursor.fetchall()
-    conn.close()
+    headers = {"Authorization": f"Token {ESV_API_KEY}"}
 
-    return [
-        {"book": r[0], "chapter": r[1], "verse": r[2], "text": r[3]} for r in results
-    ]
-
-
-# -----------------------------
-# 🌐 ESV (API FETCH)
-# -----------------------------
-def fetch_esv(query: str):
-    url = f"https://bible-api.com/{query}"
-    response = requests.get(url)
+    response = requests.get(url, params=params, headers=headers)
 
     if response.status_code != 200:
         return {"error": "Could not fetch ESV"}
 
-    return response.json()
+    data = response.json()
+
+    results = []
+
+    for r in data.get("results", []):
+        results.append({"reference": r["reference"], "content": r["content"]})
+
+    return {
+        "query": query,
+        "page": data.get("page", page),
+        "total_pages": data.get("total_pages", 1),
+        "total_results": data.get("total_results", 0),
+        "results": results,
+    }
 
 
 # -----------------------------
@@ -48,19 +46,11 @@ def fetch_esv(query: str):
 # -----------------------------
 
 
-# Root (test)
-@app.get("/")
-def root():
-    return {"message": "Bible App Running"}
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
-# KJV Search
 @app.get("/search")
-def search(query: str):
-    return search_bible(query)
-
-
-# ESV Search (API)
-@app.get("/search_esv")
-def search_esv(query: str):
-    return fetch_esv(query)
+def search(query: str, page: int = 1):
+    return JSONResponse(fetch_esv_page(query, page))

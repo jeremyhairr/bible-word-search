@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bible Word Search</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        input {
+            padding: 10px;
+            width: 70%;
+        }
+
+        button {
+            padding: 10px;
+            margin-left: 5px;
+        }
+        mark {
+            background-color: #ffe066;
+            padding: 2px 4px;
+            border-radius: 3px;
+            }
+
+        .result {
+            margin-top: 15px;
+        }
+
+        .nav {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📖 Bible Word Search</h1>
+
+    <input id="searchBox" placeholder="Enter a word..." />
+    <button onclick="startSearch()">Search</button>
+
+    <p id="summary"></p>
+
+    <div id="results"></div>
+
+    <div class="nav">
+        <button onclick="prevPage()">⬅ Previous</button>
+        <span id="pageInfo"></span>
+        <button onclick="nextPage()">Next ➡</button>
+    </div>
+
+    <hr>
+
+    <p style="font-size: 12px; color: gray;">
+        Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), 
+        copyright © 2001 by Crossway, a publishing ministry of Good News Publishers. 
+        Used by permission. All rights reserved.
+    </p>
+
+<script>
+    let currentPage = 1;
+    let currentQuery = "";
+    let totalPages = 1;
+
+    // 🔍 Highlight function
+    function highlight(text, word) {
+        const regex = new RegExp(`(${word})`, "gi");
+        return text.replace(regex, "<mark>$1</mark>");
+    }
+
+    function startSearch() {
+        currentQuery = document.getElementById("searchBox").value;
+        currentPage = 1;
+        loadPage();
+    }
+
+    async function loadPage() {
+        const res = await fetch(`/search?query=${encodeURIComponent(currentQuery)}&page=${currentPage}`);
+        const data = await res.json();
+
+        const resultsDiv = document.getElementById("results");
+        const summary = document.getElementById("summary");
+        const pageInfo = document.getElementById("pageInfo");
+
+        resultsDiv.innerHTML = "";
+
+        if (data.error) {
+            summary.textContent = data.error;
+            return;
+        }
+
+        totalPages = data.total_pages;
+
+        summary.textContent = `Found ${data.total_results} results for "${data.query}"`;
+        pageInfo.textContent = `Page ${data.page} of ${totalPages}`;
+
+        data.results.forEach(r => {
+            const div = document.createElement("div");
+            div.className = "result";
+
+            // 🔍 Highlight word in verse
+            const highlightedText = highlight(r.content, currentQuery);
+
+            div.innerHTML = `<strong>${r.reference}</strong><br>${highlightedText}`;
+            resultsDiv.appendChild(div);
+        });
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            loadPage();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            loadPage();
+        }
+    }
+
+    // ⌨️ Press ENTER to search
+    document.getElementById("searchBox").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            startSearch();
+        }
+    });
+</script>
+</body>
+</html>
