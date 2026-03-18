@@ -1,70 +1,182 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bible Word Search</title>
+    <title>Bible App</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body {
             font-family: Arial;
-            padding: 40px;
-            max-width: 800px;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
             margin: auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            background: #ddd;
+        }
+
+        .active {
+            background: #333;
+            color: white;
         }
 
         input {
-            padding: 10px;
-            width: 70%;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
         }
 
         button {
-            padding: 10px;
-            margin-left: 5px;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            background: #333;
+            color: white;
+            border: none;
         }
-        mark {
-            background-color: #ffe066;
-            padding: 2px 4px;
-            border-radius: 3px;
-            }
 
         .result {
             margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        mark {
+            background: yellow;
+            font-weight: bold;
         }
 
         .nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .reading {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: gray;
             margin-top: 20px;
         }
     </style>
 </head>
+
 <body>
 
-    <h1>📖 Bible Word Search</h1>
+<div class="container">
 
-    <input id="searchBox" placeholder="Enter a word..." />
-    <button onclick="startSearch()">Search</button>
+    <h1>📖 Bible App</h1>
 
-    <p id="summary"></p>
-
-    <div id="results"></div>
-
-    <div class="nav">
-        <button onclick="prevPage()">⬅ Previous</button>
-        <span id="pageInfo"></span>
-        <button onclick="nextPage()">Next ➡</button>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('read')">Read</button>
+        <button class="tab" onclick="showTab('search')">Search</button>
     </div>
 
-    <hr>
+    <!-- READ SECTION -->
+    <div id="readSection">
+        <input id="readBox" placeholder="John 3, Psalm 23..." />
+        <button onclick="readPassage()">Read Passage</button>
 
-    <p style="font-size: 12px; color: gray;">
-        Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), 
-        copyright © 2001 by Crossway, a publishing ministry of Good News Publishers. 
-        Used by permission. All rights reserved.
-    </p>
+        <div id="reading" class="reading"></div>
+    </div>
+
+    <!-- SEARCH SECTION -->
+    <div id="searchSection" class="hidden">
+        <input id="searchBox" placeholder="Search word..." />
+        <button onclick="startSearch()">Search</button>
+
+        <p id="summary"></p>
+
+        <div id="results"></div>
+
+        <div class="nav">
+            <button onclick="prevPage()">⬅</button>
+            <span id="pageInfo"></span>
+            <button onclick="nextPage()">➡</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®),
+        copyright © 2001 by Crossway.
+    </div>
+
+</div>
 
 <script>
     let currentPage = 1;
     let currentQuery = "";
     let totalPages = 1;
 
-    // 🔍 Highlight function
+    // 🔁 Tabs
+    function showTab(tab) {
+        document.getElementById("readSection").classList.add("hidden");
+        document.getElementById("searchSection").classList.add("hidden");
+
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+
+        if (tab === "read") {
+            document.getElementById("readSection").classList.remove("hidden");
+            document.querySelectorAll(".tab")[0].classList.add("active");
+        } else {
+            document.getElementById("searchSection").classList.remove("hidden");
+            document.querySelectorAll(".tab")[1].classList.add("active");
+        }
+    }
+
+    // 📖 READ
+    async function readPassage() {
+        const ref = document.getElementById("readBox").value;
+
+        const res = await fetch(`/read?reference=${encodeURIComponent(ref)}`);
+        const data = await res.json();
+
+        const readingDiv = document.getElementById("reading");
+
+        if (data.error) {
+            readingDiv.innerHTML = data.error;
+            return;
+        }
+
+        readingDiv.innerHTML = `<h3>${data.reference}</h3><p>${data.text}</p>`;
+    }
+
+    // 🔍 SEARCH
     function highlight(text, word) {
         const regex = new RegExp(`(${word})`, "gi");
         return text.replace(regex, "<mark>$1</mark>");
@@ -93,17 +205,17 @@
 
         totalPages = data.total_pages;
 
-        summary.textContent = `Found ${data.total_results} results for "${data.query}"`;
-        pageInfo.textContent = `Page ${data.page} of ${totalPages}`;
+        summary.textContent = `Found ${data.total_results} results`;
+
+        pageInfo.textContent = `Page ${data.page}/${totalPages}`;
 
         data.results.forEach(r => {
             const div = document.createElement("div");
             div.className = "result";
 
-            // 🔍 Highlight word in verse
-            const highlightedText = highlight(r.content, currentQuery);
+            const highlighted = highlight(r.content, currentQuery);
 
-            div.innerHTML = `<strong>${r.reference}</strong><br>${highlightedText}`;
+            div.innerHTML = `<strong>${r.reference}</strong><br>${highlighted}`;
             resultsDiv.appendChild(div);
         });
     }
@@ -122,12 +234,15 @@
         }
     }
 
-    // ⌨️ Press ENTER to search
-    document.getElementById("searchBox").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            startSearch();
-        }
+    // ⌨️ ENTER SUPPORT
+    document.getElementById("searchBox").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") startSearch();
+    });
+
+    document.getElementById("readBox").addEventListener("keypress", function(e) {
+        if (e.key === "Enter") readPassage();
     });
 </script>
+
 </body>
 </html>
