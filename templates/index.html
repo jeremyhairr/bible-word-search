@@ -6,6 +6,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
+    
+
     <link rel="apple-touch-icon" sizes="180x180" href="/static/icon.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/static/icon.png">
     <link rel="apple-touch-icon" sizes="120x120" href="/static/icon.png">
@@ -122,13 +124,12 @@
 <body>
 
 <div class="container">
-
     <h1>📖 Bible App</h1>
 
-    <!-- Tabs -->
     <div class="tabs">
         <button class="tab active" onclick="showTab('read')">Read</button>
         <button class="tab" onclick="showTab('search')">Search</button>
+        <button class="tab" onclick="showTab('ask')">Ask</button>
     </div>
 
     <!-- READ SECTION -->
@@ -155,6 +156,13 @@
         </div>
     </div>
 
+    <div id="askSection" class="hidden">
+        <input id="askBox" placeholder="Ask a Bible question..." />
+        <button onclick="askQuestion()">Ask</button>
+
+    <div id="answer" class="reading"></div>
+</div>
+
     <div class="footer">
         Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®),
         copyright © 2001 by Crossway.
@@ -169,20 +177,30 @@
 
     // 🔁 Tabs
     function showTab(tab) {
-        document.getElementById("readSection").classList.add("hidden");
-        document.getElementById("searchSection").classList.add("hidden");
+    // Hide all sections
+    document.getElementById("readSection").classList.add("hidden");
+    document.getElementById("searchSection").classList.add("hidden");
+    document.getElementById("askSection").classList.add("hidden");
 
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    // Remove active from all tabs
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
 
-        if (tab === "read") {
-            document.getElementById("readSection").classList.remove("hidden");
-            document.querySelectorAll(".tab")[0].classList.add("active");
-        } else {
-            document.getElementById("searchSection").classList.remove("hidden");
-            document.querySelectorAll(".tab")[1].classList.add("active");
-        }
+    // Show selected tab
+    if (tab === "read") {
+        document.getElementById("readSection").classList.remove("hidden");
+    } else if (tab === "search") {
+        document.getElementById("searchSection").classList.remove("hidden");
+    } else if (tab === "ask") {
+        document.getElementById("askSection").classList.remove("hidden");
     }
 
+    // Highlight correct tab
+    document.querySelectorAll(".tab").forEach(btn => {
+        if (btn.innerText.toLowerCase() === tab) {
+            btn.classList.add("active");
+        }
+    });
+    }
     // 📖 READ
     async function readPassage() {
         const ref = document.getElementById("readBox").value;
@@ -287,6 +305,21 @@
     document.getElementById("readBox").addEventListener("keypress", function(e) {
         if (e.key === "Enter") readPassage();
     });
+
+    // 🤖 ASK (AI)
+async function askQuestion() {
+    const question = document.getElementById("askBox").value;
+
+    const res = await fetch(`/ask?question=${encodeURIComponent(question)}`);
+    const data = await res.json();
+
+    const formatted = data.answer.replace(/\n/g, "<br>");
+
+    document.getElementById("answer").innerHTML = `
+        <h3>Answer</h3>
+        <p>${formatted}</p>
+    `;
+}
 </script>
 
 </body>

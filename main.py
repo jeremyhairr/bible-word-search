@@ -4,6 +4,9 @@ from fastapi.templating import Jinja2Templates
 import requests
 import os
 from fastapi.staticfiles import StaticFiles
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -86,3 +89,22 @@ def search(query: str, page: int = 1):
 @app.get("/read")
 def read(reference: str):
     return JSONResponse(fetch_passage(reference))
+
+
+@app.get("/ask")
+def ask(question: str):
+
+    response = client.chat.completions.create(
+        model="gpt-5-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": "You are a helpful Bible assistant. Answer clearly and include Scripture references when possible.",
+            },
+            {"role": "user", "content": question},
+        ],
+    )
+
+    answer = response.choices[0].message.content
+
+    return {"answer": answer}
