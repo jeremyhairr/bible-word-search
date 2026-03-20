@@ -77,7 +77,7 @@ import urllib.parse
 def fetch_api_bible(reference, bible_id):
     encoded_ref = urllib.parse.quote(reference)
 
-    url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
+    url = f"https://rest.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
 
     headers = {"api-key": API_BIBLE_KEY}
     print("USING KEY:", API_BIBLE_KEY)
