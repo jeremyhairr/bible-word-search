@@ -307,3 +307,8 @@ def ask(request: AskRequest):
     )
 
     return {"answer": response.choices[0].message.content}
+
+
+@app.get("/test")
+def test():
+    return {"status": "working"}
