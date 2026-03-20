@@ -24,8 +24,8 @@ window.readPassage = async function () {
 
         readingDiv.innerHTML = `
             <h3>${data.reference || "No reference returned"}</h3>
-            <div>${data.text || "No text returned"}</div>
-        `;
+            <div class="bible-text">${data.text || "No text returned"}</div>
+`       ;
     } catch (err) {
         console.error("ERROR:", err);
         document.getElementById("reading").innerHTML =

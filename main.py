@@ -298,10 +298,7 @@ def ask(request: AskRequest):
     response = client.chat.completions.create(
         model="gpt-5-mini",
         messages=[
-            {
-                "role": "system",
-                "content": "You are a helpful Bible assistant. Answer clearly and include Scripture references when helpful.",
-            },
+            {"role": "system", "content": "You are a helpful Bible assistant."},
             {"role": "user", "content": question},
         ],
     )
