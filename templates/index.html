@@ -212,18 +212,25 @@
     }
     // 📖 READ
     async function readPassage() {
-        const ref = document.getElementById("readBox").value;
+    const ref = document.getElementById("readBox").value;
+    const version = document.getElementById("version").value;
 
-        const version = document.getElementById("version").value;
+    const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
+    const data = await res.json();
 
-        const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
-        const data = await res.json();
+    const readingDiv = document.getElementById("reading");
 
-        const readingDiv = document.getElementById("reading");
+    console.log("READ RESPONSE:", data);
 
     if (data.error) {
         readingDiv.innerHTML = data.error;
         return;
+    }
+
+    readingDiv.innerHTML = `
+        <h3>${data.reference || "No reference returned"}</h3>
+        <div>${data.text || "No text returned"}</div>
+    `;
     }
 
         let text = data.text;

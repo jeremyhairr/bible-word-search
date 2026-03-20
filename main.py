@@ -180,8 +180,12 @@ def fetch_api_bible(reference, bible_id):
     print("USING KEY:", API_BIBLE_KEY)
 
     response = requests.get(url, headers=headers)
-
-    return response.json()
+    data = response.json()
+    print("DATA JSON:", data)
+    return {
+        "reference": data["data"].get("reference", ""),
+        "text": data["data"].get("content", ""),
+    }
 
 
 # -----------------------------
