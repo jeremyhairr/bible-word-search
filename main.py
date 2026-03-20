@@ -79,6 +79,9 @@ def fetch_api_bible(reference, bible_id):
 
     response = requests.get(url, headers=headers, params=params)
 
+    print("STATUS:", response.status_code)
+    print("RESPONSE:", response.text)
+
     if response.status_code != 200:
         return {"error": "API Bible request failed"}
 
