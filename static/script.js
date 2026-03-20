@@ -59,10 +59,15 @@ window.startSearch = async function () {
                         <strong>${r.reference}</strong>
                         <p>${r.text}</p>
                     </div>
-        `       ).join("")
+                `).join("")
                 : "<p>No results found</p>"
             }
-`       ;  
+        `;
+    } catch (err) {
+        console.error("SEARCH ERROR:", err);
+    }
+};   // ✅ THIS LINE WAS MISSING
+        
 window.askQuestion = async function () {
     console.log("❓ askQuestion triggered");
 
