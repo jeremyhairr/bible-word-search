@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 import requests
+import urllib.parse
 import os
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
@@ -70,14 +71,17 @@ def fetch_passage(reference: str):
     return {"reference": reference, "text": "".join(data.get("passages", []))}
 
 
+import urllib.parse
+
+
 def fetch_api_bible(reference, bible_id):
-    url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages"
+    encoded_ref = urllib.parse.quote(reference)
+
+    url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
 
     headers = {"api-key": API_BIBLE_KEY}
 
-    params = {"reference": reference}
-
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers)
 
     print("STATUS:", response.status_code)
     print("RESPONSE:", response.text)
@@ -86,9 +90,6 @@ def fetch_api_bible(reference, bible_id):
         return {"error": "API Bible request failed"}
 
     data = response.json()
-
-    if "data" not in data:
-        return {"error": "Passage not found"}
 
     return {"reference": data["data"]["reference"], "text": data["data"]["content"]}
 
