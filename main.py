@@ -7,6 +7,95 @@ import os
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 
+BOOK_MAP = {
+    "genesis": "GEN",
+    "exodus": "EXO",
+    "leviticus": "LEV",
+    "numbers": "NUM",
+    "deuteronomy": "DEU",
+    "joshua": "JOS",
+    "judges": "JDG",
+    "ruth": "RUT",
+    "1 samuel": "1SA",
+    "2 samuel": "2SA",
+    "1 kings": "1KI",
+    "2 kings": "2KI",
+    "1 chronicles": "1CH",
+    "2 chronicles": "2CH",
+    "ezra": "EZR",
+    "nehemiah": "NEH",
+    "esther": "EST",
+    "job": "JOB",
+    "psalm": "PSA",
+    "psalms": "PSA",
+    "proverbs": "PRO",
+    "ecclesiastes": "ECC",
+    "song of solomon": "SNG",
+    "isaiah": "ISA",
+    "jeremiah": "JER",
+    "lamentations": "LAM",
+    "ezekiel": "EZK",
+    "daniel": "DAN",
+    "hosea": "HOS",
+    "joel": "JOL",
+    "amos": "AMO",
+    "obadiah": "OBA",
+    "jonah": "JON",
+    "micah": "MIC",
+    "nahum": "NAM",
+    "habakkuk": "HAB",
+    "zephaniah": "ZEP",
+    "haggai": "HAG",
+    "zechariah": "ZEC",
+    "malachi": "MAL",
+    "matthew": "MAT",
+    "mark": "MRK",
+    "luke": "LUK",
+    "john": "JHN",
+    "acts": "ACT",
+    "romans": "ROM",
+    "1 corinthians": "1CO",
+    "2 corinthians": "2CO",
+    "galatians": "GAL",
+    "ephesians": "EPH",
+    "philippians": "PHP",
+    "colossians": "COL",
+    "1 thessalonians": "1TH",
+    "2 thessalonians": "2TH",
+    "1 timothy": "1TI",
+    "2 timothy": "2TI",
+    "titus": "TIT",
+    "philemon": "PHM",
+    "hebrews": "HEB",
+    "james": "JAS",
+    "1 peter": "1PE",
+    "2 peter": "2PE",
+    "1 john": "1JN",
+    "2 john": "2JN",
+    "3 john": "3JN",
+    "jude": "JUD",
+    "revelation": "REV",
+}
+
+
+def convert_reference(ref):
+    ref = ref.lower().strip()
+
+    # Handle cases like "1 Samuel 17"
+    for book_name in sorted(BOOK_MAP.keys(), key=len, reverse=True):
+        if ref.startswith(book_name):
+            code = BOOK_MAP[book_name]
+            rest = ref[len(book_name) :].strip()
+
+            if ":" in rest:
+                chapter, verse = rest.split(":")
+                return f"{code}.{chapter}.{verse}"
+            else:
+                return f"{code}.{rest}"
+
+    return ref  # fallback if not matched
+
+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
@@ -75,24 +164,24 @@ import urllib.parse
 
 
 def fetch_api_bible(reference, bible_id):
+
+    print("ORIGINAL:", reference)  # 👈 raw input from user
+
+    reference = convert_reference(reference)
+
+    print("CONVERTED:", reference)  # 👈 after conversion
+
     encoded_ref = urllib.parse.quote(reference)
 
     url = f"https://rest.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
 
     headers = {"api-key": API_BIBLE_KEY}
+
     print("USING KEY:", API_BIBLE_KEY)
 
     response = requests.get(url, headers=headers)
 
-    print("STATUS:", response.status_code)
-    print("RESPONSE:", response.text)
-
-    if response.status_code != 200:
-        return {"error": "API Bible request failed"}
-
-    data = response.json()
-
-    return {"reference": data["data"]["reference"], "text": data["data"]["content"]}
+    return response.json()
 
 
 # -----------------------------
