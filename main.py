@@ -146,7 +146,7 @@ def fetch_esv_page(query: str, page: int):
     results = []
 
     for r in data.get("results", []):
-        results.append({"reference": r["reference"], "content": r["content"]})
+        results.append({"reference": r["reference"], "text": r["content"]})
 
     return {
         "query": query,
