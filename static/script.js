@@ -52,14 +52,17 @@ window.startSearch = async function () {
 
         document.getElementById("results").innerHTML = `
             <h3>Results</h3>
-            <p>${data.results}</p>
-`       ;
-    } catch (err) {
-        console.error("SEARCH ERROR:", err);
-        document.getElementById("results").innerHTML =
-            `<p style="color:red;">Search failed</p>`;
-    }
-};
+            ${
+                data.results && data.results.length > 0
+                ? data.results.map(r => `
+                    <div style="margin-bottom:15px;">
+                        <strong>${r.reference}</strong>
+                        <p>${r.text}</p>
+                    </div>
+        `       ).join("")
+                : "<p>No results found</p>"
+            }
+`       ;  
 window.askQuestion = async function () {
     console.log("❓ askQuestion triggered");
 

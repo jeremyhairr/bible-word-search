@@ -106,9 +106,20 @@ class SearchRequest(BaseModel):
 
 @app.post("/search")
 def search(request: SearchRequest):
-    query = request.query
-    # your logic here
-    return {"results": f"You searched for: {query}"}
+    query = request.query.lower()
+
+    # 🔥 TEMP SIMPLE SEARCH (demo)
+    results = []
+
+    # Example: search John 1 for now
+    for i in range(1, 52):
+        ref = f"John 1:{i}"
+        verse = fetch_passage(ref)
+
+        if query in verse.get("text", "").lower():
+            results.append({"reference": ref, "text": verse.get("text")})
+
+    return {"results": results}
 
 
 BIBLES = {"csb": "a556c5305ee15c3f-01"}
