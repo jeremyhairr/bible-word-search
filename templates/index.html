@@ -134,11 +134,17 @@
 
     <!-- READ SECTION -->
     <div id="readSection">
-        <input id="readBox" placeholder="John 3, Psalm 23..." />
-        <button onclick="readPassage()">Read Passage</button>
 
-        <div id="reading" class="reading"></div>
-    </div>
+    <!-- ✅ ADD THIS -->
+    <select id="version">
+        <option value="esv">ESV</option>
+        <option value="csb">CSB</option>
+        <option value="nlt">NLT</option>
+        <option value="nasb">NASB</option>
+    </select>
+
+    <input id="readBox" placeholder="John 3, Psalm 23..." />
+    <button onclick="readPassage()">Read Passage</button>
 
     <!-- SEARCH SECTION -->
     <div id="searchSection" class="hidden">
@@ -205,15 +211,17 @@
     async function readPassage() {
         const ref = document.getElementById("readBox").value;
 
-        const res = await fetch(`/read?reference=${encodeURIComponent(ref)}`);
+        const version = document.getElementById("version").value;
+
+        const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
         const data = await res.json();
 
         const readingDiv = document.getElementById("reading");
 
-        if (data.error) {
-            readingDiv.innerHTML = data.error;
-            return;
-        }
+    if (data.error) {
+        readingDiv.innerHTML = data.error;
+        return;
+    }
 
         let text = data.text;
 

@@ -9,12 +9,14 @@ from openai import OpenAI
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
+BIBLES = {"csb": "a556c5305ee15c3f-01"}
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # Templates (HTML)
 templates = Jinja2Templates(directory="templates")
 
 # API Key
 ESV_API_KEY = os.getenv("ESV_API_KEY")
+API_BIBLE_KEY = os.getenv("API_BIBLE_KEY")
 
 
 # -----------------------------
@@ -68,6 +70,26 @@ def fetch_passage(reference: str):
     return {"reference": reference, "text": "".join(data.get("passages", []))}
 
 
+def fetch_api_bible(reference, bible_id):
+    url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages"
+
+    headers = {"api-key": API_BIBLE_KEY}
+
+    params = {"reference": reference}
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code != 200:
+        return {"error": "API Bible request failed"}
+
+    data = response.json()
+
+    if "data" not in data:
+        return {"error": "Passage not found"}
+
+    return {"reference": data["data"]["reference"], "text": data["data"]["content"]}
+
+
 # -----------------------------
 # 🚀 ROUTES
 # -----------------------------
@@ -87,8 +109,17 @@ def search(query: str, page: int = 1):
 
 # 📖 Read passage route
 @app.get("/read")
-def read(reference: str):
-    return JSONResponse(fetch_passage(reference))
+def read(reference: str, version: str = "esv"):
+
+    if version == "esv":
+        return fetch_passage(reference)
+
+    bible_id = BIBLES.get(version)
+
+    if not bible_id:
+        return {"error": "Invalid version"}
+
+    return fetch_api_bible(reference, bible_id)
 
 
 @app.get("/ask")
