@@ -50,8 +50,10 @@ window.startSearch = async function () {
 
         console.log("SEARCH RESPONSE:", data);
 
-        document.getElementById("results").innerHTML =
-            `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        document.getElementById("results").innerHTML = `
+            <h3>Results</h3>
+            <p>${data.results}</p>
+`       ;
     } catch (err) {
         console.error("SEARCH ERROR:", err);
         document.getElementById("results").innerHTML =
@@ -76,11 +78,16 @@ window.askQuestion = async function () {
 
         console.log("ASK RESPONSE:", data);
 
-        document.getElementById("results").innerHTML =
-            `<p>${data.answer || "No answer returned"}</p>`;
-    } catch (err) {
+        document.getElementById("askResult").innerHTML = `
+            <div style="margin-top: 15px;">
+                <strong>Answer:</strong>
+                <p>${data.answer || "No answer returned"}</p>
+            </div>
+`       ;
+    } 
+    catch (err) {
         console.error("ASK ERROR:", err);
-        document.getElementById("results").innerHTML =
+        document.getElementById("askResult").innerHTML =
             `<p style="color:red;">Ask failed</p>`;
     }
 };
