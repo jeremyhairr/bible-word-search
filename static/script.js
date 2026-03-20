@@ -32,3 +32,62 @@ window.readPassage = async function () {
             `<p style="color:red;">Something went wrong</p>`;
     }
 };
+window.startSearch = async function () {
+    console.log("🔍 startSearch triggered");
+
+    const query = document.getElementById("searchBox").value;
+
+    try {
+        const res = await fetch("/search", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ query: query })
+        });
+
+        const data = await res.json();
+
+        console.log("SEARCH RESPONSE:", data);
+
+        document.getElementById("results").innerHTML =
+            `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    } catch (err) {
+        console.error("SEARCH ERROR:", err);
+        document.getElementById("results").innerHTML =
+            `<p style="color:red;">Search failed</p>`;
+    }
+};
+window.askQuestion = async function () {
+    console.log("❓ askQuestion triggered");
+
+    const question = document.getElementById("askBox").value;
+
+    try {
+        const res = await fetch("/ask", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question: question })
+        });
+
+        const data = await res.json();
+
+        console.log("ASK RESPONSE:", data);
+
+        document.getElementById("results").innerHTML =
+            `<p>${data.answer || "No answer returned"}</p>`;
+    } catch (err) {
+        console.error("ASK ERROR:", err);
+        document.getElementById("results").innerHTML =
+            `<p style="color:red;">Ask failed</p>`;
+    }
+};
+window.prevPage = function () {
+    console.log("⬅ prevPage clicked");
+};
+
+window.nextPage = function () {
+    console.log("➡ nextPage clicked");
+};
