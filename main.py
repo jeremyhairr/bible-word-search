@@ -80,6 +80,7 @@ def fetch_api_bible(reference, bible_id):
     url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
 
     headers = {"api-key": API_BIBLE_KEY}
+    print("USING KEY:", API_BIBLE_KEY)
 
     response = requests.get(url, headers=headers)
 
