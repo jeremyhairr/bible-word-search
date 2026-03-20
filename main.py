@@ -81,19 +81,17 @@ BOOK_MAP = {
 def convert_reference(ref):
     ref = ref.lower().strip()
 
-    # Handle cases like "1 Samuel 17"
     for book_name in sorted(BOOK_MAP.keys(), key=len, reverse=True):
         if ref.startswith(book_name):
             code = BOOK_MAP[book_name]
             rest = ref[len(book_name) :].strip()
 
-            if ":" in rest:
-                chapter, verse = rest.split(":")
-                return f"{code}.{chapter}.{verse}"
-            else:
-                return f"{code}.{rest}"
+            # Replace ":" with "."
+            rest = rest.replace(":", ".")
 
-    return ref  # fallback if not matched
+            return f"{code}.{rest}"
+
+    return ref
 
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
