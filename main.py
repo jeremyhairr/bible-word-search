@@ -169,46 +169,62 @@ def fetch_api_bible(reference, bible_id):
 
     headers = {"api-key": API_BIBLE_KEY}
 
-    # 🔥 HANDLE RANGE (like JHN.7.14-24)
+    # ✅ HANDLE RANGE (JHN.7.14-24)
     if "-" in reference:
-        base, verse_range = reference.rsplit(".", 1)
-        start, end = verse_range.split("-")
+        try:
+            base, verse_range = reference.rsplit(".", 1)
+            start, end = verse_range.split("-")
 
-        verses = []
+            verses = []
 
-        for v in range(int(start), int(end) + 1):
-            ref = f"{base}.{v}"
-            encoded_ref = urllib.parse.quote(ref)
+            for v in range(int(start), int(end) + 1):
+                ref = f"{base}.{v}"
+                encoded_ref = urllib.parse.quote(ref)
 
-            url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
+                url = f"https://rest.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
+
+                response = requests.get(url, headers=headers)
+
+                if response.status_code == 200:
+                    data = response.json()
+                    verses.append(data["data"].get("content", ""))
+                else:
+                    print("FAILED:", ref)
+
+            return {
+                "reference": reference,
+                "text": "".join(verses) if verses else "No text returned",
+            }
+
+        except Exception as e:
+            print("RANGE ERROR:", e)
+            return {"error": "Invalid verse range format"}
+
+    # ✅ NORMAL (chapter or single verse)
+    else:
+        try:
+            encoded_ref = urllib.parse.quote(reference)
+
+            url = f"https://rest.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
+
+            print("USING KEY:", API_BIBLE_KEY)
 
             response = requests.get(url, headers=headers)
+            data = response.json()
 
-            if response.status_code == 200:
-                data = response.json()
-                verses.append(data["data"]["content"])
-            else:
-                print("FAILED:", ref)
+            print("DATA JSON:", data)
 
-        return {"reference": reference.replace(".", ":"), "text": "".join(verses)}
+            if response.status_code != 200 or "data" not in data:
+                return {"error": "API request failed"}
 
-    # 🔥 NORMAL (chapter or single verse)
-    else:
-        encoded_ref = urllib.parse.quote(reference)
+            return {
+                "reference": data["data"].get("reference", ""),
+                "text": data["data"].get("content", ""),
+            }
 
-        url = f"https://api.scripture.api.bible/v1/bibles/{bible_id}/passages/{encoded_ref}"
-
-        print("USING KEY:", API_BIBLE_KEY)
-
-        response = requests.get(url, headers=headers)
-        data = response.json()
-
-        print("DATA JSON:", data)
-
-        return {
-            "reference": data["data"].get("reference", ""),
-            "text": data["data"].get("content", ""),
-        }
+        except Exception as e:
+            print("NORMAL ERROR:", e)
+            return {"error": "Something went wrong"}
 
 
 # -----------------------------
