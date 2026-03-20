@@ -339,20 +339,8 @@
     });
 
     // 🤖 ASK (AI)
-async function askQuestion() {
-    const question = document.getElementById("askBox").value;
 
-    const res = await fetch(`/ask?question=${encodeURIComponent(question)}`);
-    const data = await res.json();
 
-    const formatted = data.answer.replace(/\n/g, "<br>");
-
-    document.getElementById("answer").innerHTML = `
-        <h3>Answer</h3>
-        <p>${formatted}</p>
-    `;
-}
-</script>
 <script src="/static/script.js"></script>
 </body>
 </html>
