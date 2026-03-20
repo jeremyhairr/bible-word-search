@@ -6,6 +6,7 @@ import urllib.parse
 import os
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
+from pydantic import BaseModel
 
 BOOK_MAP = {
     "genesis": "GEN",
@@ -97,6 +98,19 @@ def convert_reference(ref):
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
+
+
+class SearchRequest(BaseModel):
+    query: str
+
+
+@app.post("/search")
+def search(request: SearchRequest):
+    query = request.query
+    # your logic here
+    return {"results": f"You searched for: {query}"}
+
+
 BIBLES = {"csb": "a556c5305ee15c3f-01"}
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # Templates (HTML)
@@ -239,9 +253,6 @@ def home(request: Request):
 
 
 # 🔍 Search route
-@app.get("/search")
-def search(query: str, page: int = 1):
-    return JSONResponse(fetch_esv_page(query, page))
 
 
 # 📖 Read passage route
@@ -258,21 +269,30 @@ def read(reference: str, version: str = "esv"):
 
     return fetch_api_bible(reference, bible_id)
 
+    # -----------------------------
 
-@app.get("/ask")
-def ask(question: str):
+
+# ❓ ASK ROUTE
+# -----------------------------
+
+
+class AskRequest(BaseModel):
+    question: str
+
+
+@app.post("/ask")
+def ask(request: AskRequest):
+    question = request.question
 
     response = client.chat.completions.create(
         model="gpt-5-mini",
         messages=[
             {
                 "role": "system",
-                "content": "You are a helpful Bible assistant. Answer clearly and include Scripture references when possible.",
+                "content": "You are a helpful Bible assistant. Answer clearly and include Scripture references when helpful.",
             },
             {"role": "user", "content": question},
         ],
     )
 
-    answer = response.choices[0].message.content
-
-    return {"answer": answer}
+    return {"answer": response.choices[0].message.content}
