@@ -1,19 +1,15 @@
 console.log("🔥 SCRIPT CONNECTED 🔥");
 
+// 📖 READ PASSAGE
 window.readPassage = async function () {
     console.log("📖 readPassage triggered");
 
     const ref = document.getElementById("readBox").value;
-    const version = document.getElementById("version").value;
-
-    console.log("REFERENCE:", ref);
-    console.log("VERSION:", version);
+    const version = document.getElementById("versionSelect").value;
 
     try {
         const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
         const data = await res.json();
-
-        console.log("API RESPONSE:", data);
 
         const readingDiv = document.getElementById("reading");
 
@@ -23,15 +19,16 @@ window.readPassage = async function () {
         }
 
         readingDiv.innerHTML = `
-            <h3>${data.reference || "No reference returned"}</h3>
-            <div class="bible-text">${data.text || "No text returned"}</div>
-`       ;
+            <h3>${data.reference}</h3>
+            <div>${data.text}</div>
+        `;
     } catch (err) {
-        console.error("ERROR:", err);
-        document.getElementById("reading").innerHTML =
-            `<p style="color:red;">Something went wrong</p>`;
+        console.error(err);
     }
 };
+
+
+// 🔍 SEARCH
 window.startSearch = async function () {
     console.log("🔍 startSearch triggered");
 
@@ -43,33 +40,33 @@ window.startSearch = async function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ query: query })
+            body: JSON.stringify({ query })
         });
 
         const data = await res.json();
 
-        console.log("SEARCH RESPONSE:", data);
-
         document.getElementById("results").innerHTML = `
             <h3>Results</h3>
             ${
-                data.results && data.results.length > 0
-                ? data.results.map(r => `
-                    <div style="margin-bottom:15px;">
-                        <strong>${r.reference}</strong>
-                        <p>${r.text}</p>
-                    </div>
-                `).join("")
-                : "<p>No results found</p>"
+                data.results && data.results.length
+                    ? data.results.map(r => `
+                        <div>
+                            <strong>${r.reference}</strong>
+                            <p>${r.text}</p>
+                        </div>
+                    `).join("")
+                    : "<p>No results</p>"
             }
         `;
     } catch (err) {
-        console.error("SEARCH ERROR:", err);
+        console.error(err);
     }
-};   // ✅ THIS LINE WAS MISSING
-        
+};
+
+
+// ❓ ASK AI
 window.askQuestion = async function () {
-    console.log("❓ askQuestion triggered");
+    console.log("❓ ask triggered");
 
     const question = document.getElementById("askBox").value;
 
@@ -79,43 +76,36 @@ window.askQuestion = async function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ question: question })
+            body: JSON.stringify({ question })
         });
 
         const data = await res.json();
 
-        console.log("ASK RESPONSE:", data);
-
         document.getElementById("askResult").innerHTML = `
-            <div style="margin-top: 15px;">
-                <strong>Answer:</strong>
-                <p>${data.answer || "No answer returned"}</p>
-            </div>
-`       ;
-    } 
-    catch (err) {
-        console.error("ASK ERROR:", err);
-        document.getElementById("askResult").innerHTML =
-            `<p style="color:red;">Ask failed</p>`;
+            <strong>Answer:</strong>
+            <p>${data.answer}</p>
+        `;
+    } catch (err) {
+        console.error(err);
     }
 };
+
+
+// 🔁 TAB SWITCH
+window.showSection = function (section) {
+    document.getElementById("readSection").style.display = "none";
+    document.getElementById("searchSection").style.display = "none";
+    document.getElementById("askSection").style.display = "none";
+
+    document.getElementById(section).style.display = "block";
+};
+
+
+// ⬅ ➡ PAGINATION (placeholder)
 window.prevPage = function () {
-    console.log("⬅ prevPage clicked");
+    console.log("⬅ prev");
 };
 
 window.nextPage = function () {
-    console.log("➡ nextPage clicked");
+    console.log("➡ next");
 };
-function showSection(section) {
-    document.getElementById("reading").parentElement.classList.add("hidden");
-    document.getElementById("searchSection").classList.add("hidden");
-    document.getElementById("askSection").classList.add("hidden");
-
-    if (section === "read") {
-        document.getElementById("reading").parentElement.classList.remove("hidden");
-    } else if (section === "search") {
-        document.getElementById("searchSection").classList.remove("hidden");
-    } else if (section === "ask") {
-        document.getElementById("askSection").classList.remove("hidden");
-    }
-}
