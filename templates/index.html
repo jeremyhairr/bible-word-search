@@ -3,344 +3,81 @@
 <head>
     <title>Bible App</title>
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-
-    
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/static/icon.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/static/icon.png">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
-            font-family: Georgia, serif;
-            margin: 0;
-            background:#f5f5f5;
-        }
-
-        .container {
-            max-width: 600px;
+            font-family: Arial;
+            padding: 30px;
+            max-width: 800px;
             margin: auto;
-            padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 15px;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            cursor: pointer;
-            background: #ddd;
-            font-size: 16px;
-        }
-
-        .active {
-            background: #333;
-            color: white;
-        }
-
-        input {
+        input, select, button {
+            padding: 10px;
+            margin: 5px 0;
             width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 16px;
         }
 
         button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 16px;
             background: #333;
             color: white;
             border: none;
+            cursor: pointer;
         }
 
-        .reading {
-            background: white;
-            padding: 18px;
-            border-radius: 6px;
-            margin-top: 15px;
-            line-height: 1.7;
-            font-size: 17px;
+        button:hover {
+            background: #555;
         }
 
-        .reading h3 {
-            margin-top: 0;
-        }
-
-        .result {
-            margin-top: 15px;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        mark {
-            background: #ffe066;
-            padding: 2px 4px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .footnotes {
+        .section {
             margin-top: 30px;
-            padding-top: 10px;
-            border-top: 1px solid #ccc;
-            font-size: 13px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        .footer {
-            font-size: 12px;
-            color: gray;
-            margin-top: 25px;
-        }
-        .bible-text {
-            line-height: 1.6;
-            font-size: 18px;
-        }
-
-        .bible-text span[data-number] {
-            font-weight: bold;
-            margin-right: 4px;
         }
     </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>📖 Bible App</h1>
+<h1>📖 Bible App</h1>
 
-    <div class="tabs">
-        <button class="tab active" onclick="showSection('read')">Read</button>
-        <button class="tab" onclick="showSection('search')">Search</button>
-        <button class="tab" onclick="showSection('ask')">Ask</button>
-    </div>
+<!-- READ -->
+<div class="section">
+    <h2>Read Passage</h2>
 
-    <!-- READ SECTION -->
-    <div id="readSection">
-
-    <select id="version">
+    <select id="versionSelect">
         <option value="esv">ESV</option>
         <option value="csb">CSB</option>
-        <option value="nlt">NLT</option>
-        <option value="nasb">NASB</option>
     </select>
 
-    <input id="readBox" placeholder="John 3, Psalm 23..." />
+    <input id="readBox" placeholder="John 3 or Psalm 23" />
+
     <button onclick="readPassage()">Read Passage</button>
 
-    <!-- ✅ THIS FIXES YOUR ERROR -->
-    <div id="reading" class="reading"></div>
-
-    </div>
-    <!-- SEARCH SECTION -->
-    <div id="searchSection" class="hidden">
-        <input id="searchBox" placeholder="Search word..." />
-        <button onclick="startSearch()">Search</button>
-
-        <p id="summary"></p>
-
-        <div id="results"></div>
-
-        <div class="nav">
-            <button onclick="prevPage()">⬅</button>
-            <span id="pageInfo"></span>
-            <button onclick="nextPage()">➡</button>
-        </div>
-    </div>
-
-    <div id="askSection" class="hidden">
-        <input id="askBox" placeholder="Ask a Bible question..." />
-        <button onclick="askQuestion()">Ask</button>
-
-    <div id="answer" class="reading"></div>
+    <div id="reading"></div>
 </div>
 
-    <div class="footer">
-        Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®),
-        copyright © 2001 by Crossway.
-    </div>
+<!-- SEARCH -->
+<div class="section">
+    <h2>Search</h2>
 
+    <input id="searchBox" placeholder="Search word..." />
+
+    <button onclick="startSearch()">Search</button>
+
+    <div id="results"></div>
 </div>
 
-<script>
-    let currentPage = 1;
-    let currentQuery = "";
-    let totalPages = 1;
+<!-- ASK -->
+<div class="section">
+    <h2>Ask (AI)</h2>
 
-    // 🔁 Tabs
-    function showSection(section) {
-    // Hide all sections
-    document.getElementById("readSection").classList.add("hidden");
-    document.getElementById("searchSection").classList.add("hidden");
-    document.getElementById("askSection").classList.add("hidden");
+    <input id="askBox" placeholder="Ask a question..." />
 
-    // Remove active class from ALL tabs
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+    <button onclick="askQuestion()">Ask</button>
 
-    // Show correct section + activate correct tab
-    if (section === "read") {
-        document.getElementById("readSection").classList.remove("hidden");
-        document.querySelectorAll(".tab")[0].classList.add("active");
-    } else if (section === "search") {
-        document.getElementById("searchSection").classList.remove("hidden");
-        document.querySelectorAll(".tab")[1].classList.add("active");
-    } else if (section === "ask") {
-        document.getElementById("askSection").classList.remove("hidden");
-        document.querySelectorAll(".tab")[2].classList.add("active");
-    }
-}
+    <div id="askResult"></div>
+</div>
 
-
-    // Highlight correct tab
-    document.querySelectorAll(".tab").forEach(btn => {
-        if (btn.innerText.toLowerCase() === tab) {
-            btn.classList.add("active");
-        }
-    });
-    }
-    // 📖 READ
-    async function readPassage() {
-    const ref = document.getElementById("readBox").value;
-    const version = document.getElementById("version").value;
-
-    const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
-    const data = await res.json();
-
-    const readingDiv = document.getElementById("reading");
-
-    console.log("READ RESPONSE:", data);
-
-    if (data.error) {
-        readingDiv.innerHTML = data.error;
-        return;
-    }
-
-    readingDiv.innerHTML = `
-        <h3>${data.reference || "No reference returned"}</h3>
-        <div>${data.text || "No text returned"}</div>
-    `;
-    }
-
-        let text = data.text;
-
-        let mainText = text;
-        let footnotes = "";
-
-        if (text.includes("Footnotes")) {
-            const parts = text.split("Footnotes");
-            mainText = parts[0];
-            footnotes = parts[1];
-        }
-
-        readingDiv.innerHTML = `
-            <h3>${data.reference}</h3>
-            <div class="bible-text">${data.text}</div>
-
-            ${footnotes ? `
-                <div class="footnotes">
-                    <strong>Footnotes</strong>
-                    <p>${footnotes}</p>
-                </div>
-            ` : ""}
-        `;
-    
-
-    // 🔍 SEARCH
-    function highlight(text, word) {
-        const regex = new RegExp(`(${word})`, "gi");
-        return text.replace(regex, "<mark>$1</mark>");
-    }
-
-    function startSearch() {
-        currentQuery = document.getElementById("searchBox").value;
-        currentPage = 1;
-        loadPage();
-    }
-
-    async function loadPage() {
-        const res = await fetch(`/search?query=${encodeURIComponent(currentQuery)}&page=${currentPage}`);
-        const data = await res.json();
-
-        const resultsDiv = document.getElementById("results");
-        const summary = document.getElementById("summary");
-        const pageInfo = document.getElementById("pageInfo");
-
-        resultsDiv.innerHTML = "";
-
-        if (data.error) {
-            summary.textContent = data.error;
-            return;
-        }
-
-        totalPages = data.total_pages;
-
-        summary.textContent = `Found ${data.total_results} results`;
-
-        pageInfo.textContent = `Page ${data.page}/${totalPages}`;
-
-        data.results.forEach(r => {
-            const div = document.createElement("div");
-            div.className = "result";
-
-            const highlighted = highlight(r.content, currentQuery);
-
-            div.innerHTML = `<strong>${r.reference}</strong><br>${highlighted}`;
-            resultsDiv.appendChild(div);
-        });
-    }
-
-    function nextPage() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            loadPage();
-        }
-    }
-
-    function prevPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            loadPage();
-        }
-    }
-
-    // ⌨️ ENTER SUPPORT
-    document.getElementById("searchBox").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") startSearch();
-    });
-
-    document.getElementById("readBox").addEventListener("keypress", function(e) {
-        if (e.key === "Enter") readPassage();
-    });
-
-    // 🤖 ASK (AI)
-
-
+<!-- ONLY SCRIPT -->
 <script src="/static/script.js"></script>
+
 </body>
 </html>

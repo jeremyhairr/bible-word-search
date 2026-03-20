@@ -1,11 +1,11 @@
-console.log("🔥 SCRIPT CONNECTED 🔥");
+console.log("🔥 SCRIPT LOADED 🔥");
 
-// 📖 READ PASSAGE
+// 📖 READ
 window.readPassage = async function () {
-    console.log("📖 readPassage triggered");
-
     const ref = document.getElementById("readBox").value;
     const version = document.getElementById("versionSelect").value;
+
+    console.log("Reading:", ref, version);
 
     try {
         const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
@@ -24,15 +24,17 @@ window.readPassage = async function () {
         `;
     } catch (err) {
         console.error(err);
+        document.getElementById("reading").innerHTML =
+            `<p style="color:red;">Error loading passage</p>`;
     }
 };
 
 
 // 🔍 SEARCH
 window.startSearch = async function () {
-    console.log("🔍 startSearch triggered");
-
     const query = document.getElementById("searchBox").value;
+
+    console.log("Searching:", query);
 
     try {
         const res = await fetch("/search", {
@@ -40,7 +42,7 @@ window.startSearch = async function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ query })
+            body: JSON.stringify({ query: query })
         });
 
         const data = await res.json();
@@ -48,27 +50,29 @@ window.startSearch = async function () {
         document.getElementById("results").innerHTML = `
             <h3>Results</h3>
             ${
-                data.results && data.results.length
-                    ? data.results.map(r => `
-                        <div>
-                            <strong>${r.reference}</strong>
-                            <p>${r.text}</p>
-                        </div>
-                    `).join("")
-                    : "<p>No results</p>"
+                data.results && data.results.length > 0
+                ? data.results.map(r => `
+                    <div style="margin-bottom:15px;">
+                        <strong>${r.reference}</strong>
+                        <p>${r.text}</p>
+                    </div>
+                `).join("")
+                : "<p>No results found</p>"
             }
         `;
     } catch (err) {
         console.error(err);
+        document.getElementById("results").innerHTML =
+            `<p style="color:red;">Search failed</p>`;
     }
 };
 
 
-// ❓ ASK AI
+// ❓ ASK
 window.askQuestion = async function () {
-    console.log("❓ ask triggered");
-
     const question = document.getElementById("askBox").value;
+
+    console.log("Asking:", question);
 
     try {
         const res = await fetch("/ask", {
@@ -76,36 +80,20 @@ window.askQuestion = async function () {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ question })
+            body: JSON.stringify({ question: question })
         });
 
         const data = await res.json();
 
         document.getElementById("askResult").innerHTML = `
-            <strong>Answer:</strong>
-            <p>${data.answer}</p>
+            <div style="margin-top: 15px;">
+                <strong>Answer:</strong>
+                <p>${data.answer}</p>
+            </div>
         `;
     } catch (err) {
         console.error(err);
+        document.getElementById("askResult").innerHTML =
+            `<p style="color:red;">Ask failed</p>`;
     }
-};
-
-
-// 🔁 TAB SWITCH
-window.showSection = function (section) {
-    document.getElementById("readSection").style.display = "none";
-    document.getElementById("searchSection").style.display = "none";
-    document.getElementById("askSection").style.display = "none";
-
-    document.getElementById(section).style.display = "block";
-};
-
-
-// ⬅ ➡ PAGINATION (placeholder)
-window.prevPage = function () {
-    console.log("⬅ prev");
-};
-
-window.nextPage = function () {
-    console.log("➡ next");
 };
