@@ -127,9 +127,9 @@
     <h1>📖 Bible App</h1>
 
     <div class="tabs">
-        <button class="tab active" onclick="showTab('read')">Read</button>
-        <button class="tab" onclick="showTab('search')">Search</button>
-        <button class="tab" onclick="showTab('ask')">Ask</button>
+        <button class="tab active" onclick="showSection('read')">Read</button>
+        <button class="tab" onclick="showSection('search')">Search</button>
+        <button class="tab" onclick="showSection('ask')">Ask</button>
     </div>
 
     <!-- READ SECTION -->
@@ -185,23 +185,19 @@
     let totalPages = 1;
 
     // 🔁 Tabs
-    function showTab(tab) {
-    // Hide all sections
+    function showSection(section) {
     document.getElementById("readSection").classList.add("hidden");
     document.getElementById("searchSection").classList.add("hidden");
     document.getElementById("askSection").classList.add("hidden");
 
-    // Remove active from all tabs
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-
-    // Show selected tab
-    if (tab === "read") {
+    if (section === "read") {
         document.getElementById("readSection").classList.remove("hidden");
-    } else if (tab === "search") {
+    } else if (section === "search") {
         document.getElementById("searchSection").classList.remove("hidden");
-    } else if (tab === "ask") {
+    } else if (section === "ask") {
         document.getElementById("askSection").classList.remove("hidden");
     }
+}
 
     // Highlight correct tab
     document.querySelectorAll(".tab").forEach(btn => {

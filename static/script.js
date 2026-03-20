@@ -91,3 +91,16 @@ window.prevPage = function () {
 window.nextPage = function () {
     console.log("➡ nextPage clicked");
 };
+function showSection(section) {
+    document.getElementById("reading").parentElement.classList.add("hidden");
+    document.getElementById("searchSection").classList.add("hidden");
+    document.getElementById("askSection").classList.add("hidden");
+
+    if (section === "read") {
+        document.getElementById("reading").parentElement.classList.remove("hidden");
+    } else if (section === "search") {
+        document.getElementById("searchSection").classList.remove("hidden");
+    } else if (section === "ask") {
+        document.getElementById("askSection").classList.remove("hidden");
+    }
+}
