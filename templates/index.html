@@ -260,7 +260,7 @@
 
         readingDiv.innerHTML = `
             <h3>${data.reference}</h3>
-            ${data.text}
+            <div class="bible-text">${data.text}</div>
 
             ${footnotes ? `
                 <div class="footnotes">
@@ -269,7 +269,7 @@
                 </div>
             ` : ""}
         `;
-    }
+    
 
     // 🔍 SEARCH
     function highlight(text, word) {
