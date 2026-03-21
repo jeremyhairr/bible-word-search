@@ -302,3 +302,12 @@ def ask(request: AskRequest):
 @app.get("/test")
 def test():
     return {"status": "working"}
+
+
+from services.commentary_service import get_commentary
+
+
+@app.get("/commentary")
+def commentary(book: str, chapter: int, verse: int):
+    results = get_commentary(book.lower(), chapter, verse)
+    return {"commentary": results}

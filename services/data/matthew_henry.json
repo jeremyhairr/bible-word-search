@@ -1,0 +1,72 @@
+[
+  {"book":"John","chapter":1,"start_verse":1,"end_verse":5,"text":"The divine nature and eternal existence of Christ are here declared. He is the Word, with God, and is God, the fountain of life and light."},
+  {"book":"John","chapter":1,"start_verse":6,"end_verse":14,"text":"John the Baptist is introduced as a witness to the Light. Christ comes into the world, though the world knew Him not. Yet to those who receive Him, He gives power to become children of God."},
+  {"book":"John","chapter":1,"start_verse":15,"end_verse":28,"text":"John bears witness to Christ’s superiority. The fullness of grace and truth is found in Him."},
+  {"book":"John","chapter":1,"start_verse":29,"end_verse":51,"text":"Christ is revealed as the Lamb of God. The first disciples are called and begin to follow Him."},
+
+  {"book":"John","chapter":2,"start_verse":1,"end_verse":12,"text":"The miracle at Cana shows Christ’s power over nature and His approval of marriage."},
+  {"book":"John","chapter":2,"start_verse":13,"end_verse":25,"text":"Christ cleanses the temple, demonstrating zeal for God's house and authority over worship."},
+
+  {"book":"John","chapter":3,"start_verse":1,"end_verse":8,"text":"Christ teaches Nicodemus the necessity of being born again by the Spirit."},
+  {"book":"John","chapter":3,"start_verse":9,"end_verse":21,"text":"Christ explains salvation and God's love for the world in giving His Son."},
+  {"book":"John","chapter":3,"start_verse":22,"end_verse":36,"text":"John the Baptist exalts Christ, declaring that He must increase."},
+
+  {"book":"John","chapter":4,"start_verse":1,"end_verse":26,"text":"Christ reveals Himself to the Samaritan woman and offers living water."},
+  {"book":"John","chapter":4,"start_verse":27,"end_verse":42,"text":"Many Samaritans believe through the woman's testimony and Christ’s word."},
+  {"book":"John","chapter":4,"start_verse":43,"end_verse":54,"text":"Christ heals the nobleman’s son, showing the power of faith."},
+
+  {"book":"John","chapter":5,"start_verse":1,"end_verse":18,"text":"Christ heals at Bethesda and declares His authority equal with the Father."},
+  {"book":"John","chapter":5,"start_verse":19,"end_verse":47,"text":"Christ teaches about His divine authority, judgment, and witness."},
+
+  {"book":"John","chapter":6,"start_verse":1,"end_verse":21,"text":"Christ feeds the five thousand and walks on water."},
+  {"book":"John","chapter":6,"start_verse":22,"end_verse":59,"text":"Christ declares Himself the Bread of Life."},
+  {"book":"John","chapter":6,"start_verse":60,"end_verse":71,"text":"Many disciples turn away, but Peter confesses Christ."},
+
+  {"book":"John","chapter":7,"start_verse":1,"end_verse":13,"text":"Jesus goes to the Feast of Booths amid opposition and secrecy."},
+  {"book":"John","chapter":7,"start_verse":14,"end_verse":24,"text":"Christ teaches in the temple with divine authority."},
+  {"book":"John","chapter":7,"start_verse":25,"end_verse":36,"text":"Debate arises about Christ’s identity and origin."},
+  {"book":"John","chapter":7,"start_verse":37,"end_verse":52,"text":"Christ invites all to come to Him for living water."},
+
+  {"book":"John","chapter":8,"start_verse":1,"end_verse":11,"text":"The woman caught in adultery is shown mercy."},
+  {"book":"John","chapter":8,"start_verse":12,"end_verse":30,"text":"Christ declares Himself the Light of the world."},
+  {"book":"John","chapter":8,"start_verse":31,"end_verse":59,"text":"Christ teaches truth, freedom, and His eternal existence."},
+
+  {"book":"John","chapter":9,"start_verse":1,"end_verse":12,"text":"Christ heals a man born blind."},
+  {"book":"John","chapter":9,"start_verse":13,"end_verse":34,"text":"The Pharisees question the miracle."},
+  {"book":"John","chapter":9,"start_verse":35,"end_verse":41,"text":"Spiritual blindness is exposed."},
+
+  {"book":"John","chapter":10,"start_verse":1,"end_verse":21,"text":"Christ is the Good Shepherd who lays down His life."},
+  {"book":"John","chapter":10,"start_verse":22,"end_verse":42,"text":"Christ declares unity with the Father."},
+
+  {"book":"John","chapter":11,"start_verse":1,"end_verse":27,"text":"Lazarus dies and Christ declares Himself the resurrection."},
+  {"book":"John","chapter":11,"start_verse":28,"end_verse":57,"text":"Christ raises Lazarus from the dead."},
+
+  {"book":"John","chapter":12,"start_verse":1,"end_verse":19,"text":"Mary anoints Jesus and He enters Jerusalem."},
+  {"book":"John","chapter":12,"start_verse":20,"end_verse":50,"text":"Christ speaks of His death and calls for faith."},
+
+  {"book":"John","chapter":13,"start_verse":1,"end_verse":17,"text":"Christ washes the disciples’ feet."},
+  {"book":"John","chapter":13,"start_verse":18,"end_verse":38,"text":"Christ foretells betrayal and denial."},
+
+  {"book":"John","chapter":14,"start_verse":1,"end_verse":14,"text":"Christ comforts His disciples and declares Himself the way."},
+  {"book":"John","chapter":14,"start_verse":15,"end_verse":31,"text":"Promise of the Holy Spirit and peace."},
+
+  {"book":"John","chapter":15,"start_verse":1,"end_verse":17,"text":"Christ is the true vine; believers must abide in Him."},
+  {"book":"John","chapter":15,"start_verse":18,"end_verse":27,"text":"The world hates Christ’s followers."},
+
+  {"book":"John","chapter":16,"start_verse":1,"end_verse":15,"text":"The Holy Spirit will guide believers into truth."},
+  {"book":"John","chapter":16,"start_verse":16,"end_verse":33,"text":"Christ speaks of sorrow turning to joy and His victory."},
+
+  {"book":"John","chapter":17,"start_verse":1,"end_verse":26,"text":"Christ’s high priestly prayer for His people."},
+
+  {"book":"John","chapter":18,"start_verse":1,"end_verse":27,"text":"Christ is arrested and Peter denies Him."},
+  {"book":"John","chapter":18,"start_verse":28,"end_verse":40,"text":"Christ stands before Pilate."},
+
+  {"book":"John","chapter":19,"start_verse":1,"end_verse":30,"text":"Christ is crucified and dies."},
+  {"book":"John","chapter":19,"start_verse":31,"end_verse":42,"text":"Christ is buried."},
+
+  {"book":"John","chapter":20,"start_verse":1,"end_verse":18,"text":"Christ rises from the dead and appears to Mary."},
+  {"book":"John","chapter":20,"start_verse":19,"end_verse":31,"text":"Christ appears to His disciples and Thomas believes."},
+
+  {"book":"John","chapter":21,"start_verse":1,"end_verse":14,"text":"Christ appears by the sea and provides a miraculous catch."},
+  {"book":"John","chapter":21,"start_verse":15,"end_verse":25,"text":"Christ restores Peter and commissions him."}
+]

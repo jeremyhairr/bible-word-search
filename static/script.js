@@ -4,14 +4,17 @@ console.log("🔥 SCRIPT LOADED 🔥");
 
 // 📖 READ
 window.readPassage = async function () {
-    const ref = document.getElementById("readBox").value;
+    const ref = document.getElementById("readBox").value.trim();
     const version = document.getElementById("versionSelect").value;
 
     console.log("Reading:", ref, version);
 
     try {
+        // 📖 1. Fetch Bible passage FIRST
         const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
         const data = await res.json();
+
+        console.log("READ DATA:", data);
 
         const readingDiv = document.getElementById("reading");
 
@@ -20,18 +23,61 @@ window.readPassage = async function () {
             return;
         }
 
+        // 📘 2. Render verse FIRST
         readingDiv.innerHTML = `
             <h3>${data.reference}</h3>
-            <div>${data.text}</div>
+            <div class="bible-text">${data.text}</div>
         `;
+
+        // 🔍 3. Parse reference CLEANLY (FIXED)
+        let book = "";
+        let chapter = 1;
+        let verse = 1;
+
+        if (ref.includes(" ")) {
+            const [bookPart, versePart] = ref.split(" ");
+
+            book = bookPart.toLowerCase();
+
+            if (versePart && versePart.includes(":")) {
+                const parts = versePart.split(":");
+                chapter = parseInt(parts[0]);
+                verse = parseInt(parts[1]);
+            } else if (versePart) {
+                chapter = parseInt(versePart);
+                verse = 1;
+            }
+        }
+
+        console.log("Parsed:", book, chapter, verse);
+
+        // 📘 4. Fetch commentary
+        if (book && chapter && verse) {
+            const commentaryRes = await fetch(
+                `/commentary?book=${book}&chapter=${chapter}&verse=${verse}`
+            );
+
+            const commentaryData = await commentaryRes.json();
+
+            console.log("COMMENTARY:", commentaryData);
+
+            // ➕ 5. Append commentary
+            readingDiv.innerHTML += `
+                <div style="margin-top:20px; padding:10px; border-top:1px solid #ccc;">
+                    <h4>📘 Matthew Henry Commentary</h4>
+                    ${
+                        commentaryData.commentary.length > 0
+                        ? commentaryData.commentary.map(c => `<p>${c}</p>`).join("")
+                        : "<p>No commentary available</p>"
+                    }
+                </div>
+            `;
+        }
+
     } catch (err) {
-        console.error(err);
-        document.getElementById("reading").innerHTML =
-            `<p style="color:red;">Error loading passage</p>`;
+        console.error("ERROR:", err);
     }
 };
-
-
 // 🔍 SEARCH
 window.startSearch = function () {
     currentQuery = document.getElementById("searchBox").value;
