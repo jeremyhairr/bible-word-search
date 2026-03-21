@@ -102,18 +102,17 @@ app = FastAPI()
 
 class SearchRequest(BaseModel):
     query: str
+    page: int = 1
 
 
 @app.post("/search")
 def search(request: SearchRequest):
-    query = request.query
-
-    data = fetch_esv_page(query, page=1)
+    data = fetch_esv_page(request.query, request.page)
 
     if "error" in data:
         return {"results": []}
 
-    return {"results": data["results"]}
+    return data  # 👈 IMPORTANT (send full response)
 
 
 BIBLES = {"csb": "a556c5305ee15c3f-01"}
