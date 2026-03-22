@@ -1,72 +1,427 @@
 [
-  {"book":"John","chapter":1,"start_verse":1,"end_verse":5,"text":"The divine nature and eternal existence of Christ are here declared. He is the Word, with God, and is God, the fountain of life and light."},
-  {"book":"John","chapter":1,"start_verse":6,"end_verse":14,"text":"John the Baptist is introduced as a witness to the Light. Christ comes into the world, though the world knew Him not. Yet to those who receive Him, He gives power to become children of God."},
-  {"book":"John","chapter":1,"start_verse":15,"end_verse":28,"text":"John bears witness to Christ’s superiority. The fullness of grace and truth is found in Him."},
-  {"book":"John","chapter":1,"start_verse":29,"end_verse":51,"text":"Christ is revealed as the Lamb of God. The first disciples are called and begin to follow Him."},
+  {
+    "book": "John",
+    "chapter": 1,
+    "start_verse": 1,
+    "end_verse": 18,
+    "text": "The evangelist begins with the divinity of Christ, showing that He was the Word, existing from eternity with God, and Himself God. All things were made by Him, and without Him nothing was made. In Him was life, and that life was the light of men. Though the light shone in darkness, the darkness did not comprehend it. John the Baptist came as a witness to testify of this Light. Christ came into the world He created, yet the world did not know Him. Even His own people rejected Him, but to those who received Him, He gave the right to become children of God. The Word became flesh and dwelt among us, full of grace and truth, revealing the glory of the Father."
+  },
+  {
+    "book": "John",
+    "chapter": 1,
+    "start_verse": 19,
+    "end_verse": 34,
+    "text": "John the Baptist testifies concerning Christ, denying that he himself is the Messiah, Elijah, or the Prophet. Instead, he identifies himself as the voice crying in the wilderness, preparing the way of the Lord. When Jesus appears, John declares Him to be the Lamb of God who takes away the sin of the world. He explains that he saw the Spirit descend upon Jesus like a dove, confirming that Jesus is the Son of God. John's ministry is thus shown to be one of pointing others to Christ."
+  },
+  {
+    "book": "John",
+    "chapter": 1,
+    "start_verse": 35,
+    "end_verse": 51,
+    "text": "The first disciples begin to follow Jesus after John directs them to Him. Andrew brings his brother Simon, whom Jesus names Peter. Jesus then calls Philip, who brings Nathanael. Nathanael initially doubts but is convinced when Jesus demonstrates supernatural knowledge. Christ promises that they will see greater things, including heaven opened and angels ascending and descending upon the Son of Man."
+  },
 
-  {"book":"John","chapter":2,"start_verse":1,"end_verse":12,"text":"The miracle at Cana shows Christ’s power over nature and His approval of marriage."},
-  {"book":"John","chapter":2,"start_verse":13,"end_verse":25,"text":"Christ cleanses the temple, demonstrating zeal for God's house and authority over worship."},
+  {
+    "book": "John",
+    "chapter": 2,
+    "start_verse": 1,
+    "end_verse": 11,
+    "text": "Christ performs His first miracle at Cana by turning water into wine. This demonstrates His divine power and compassion, as well as His authority over nature. It also signifies the joy and abundance brought by His ministry. His disciples believed in Him through this sign."
+  },
+  {
+    "book": "John",
+    "chapter": 2,
+    "start_verse": 12,
+    "end_verse": 25,
+    "text": "Jesus cleanses the temple, driving out those who made it a place of commerce rather than worship. He declares His authority, and when challenged, speaks of raising the temple in three days, referring to His resurrection. Many believed in Him because of His miracles, but Jesus did not entrust Himself to them, knowing what was in man."
+  },
 
-  {"book":"John","chapter":3,"start_verse":1,"end_verse":8,"text":"Christ teaches Nicodemus the necessity of being born again by the Spirit."},
-  {"book":"John","chapter":3,"start_verse":9,"end_verse":21,"text":"Christ explains salvation and God's love for the world in giving His Son."},
-  {"book":"John","chapter":3,"start_verse":22,"end_verse":36,"text":"John the Baptist exalts Christ, declaring that He must increase."},
+  {
+    "book": "John",
+    "chapter": 3,
+    "start_verse": 1,
+    "end_verse": 8,
+    "text": "Nicodemus comes to Jesus by night, acknowledging Him as a teacher from God. Jesus teaches the necessity of being born again, explaining that this new birth is spiritual, not physical. It is the work of the Spirit, sovereign and mysterious like the wind."
+  },
+  {
+    "book": "John",
+    "chapter": 3,
+    "start_verse": 9,
+    "end_verse": 21,
+    "text": "Jesus explains heavenly truths to Nicodemus, emphasizing the necessity of faith in Him. He speaks of His coming crucifixion, comparing it to the bronze serpent lifted up in the wilderness. The famous declaration follows: God so loved the world that He gave His only Son. Light has come into the world, but people loved darkness rather than light because their deeds were evil."
+  },
+  {
+    "book": "John",
+    "chapter": 3,
+    "start_verse": 22,
+    "end_verse": 36,
+    "text": "John the Baptist affirms Christ's supremacy, declaring that he must decrease while Christ must increase. He testifies that Jesus comes from above and speaks the words of God. Whoever believes in the Son has eternal life, but whoever rejects Him remains under God's wrath."
+  },
+  
+{
+  "book": "John",
+  "chapter": 4,
+  "start_verse": 1,
+  "end_verse": 26,
+  "text": "Jesus departs Judea and passes through Samaria, where He meets a Samaritan woman at the well. He offers her living water, speaking of the eternal satisfaction found in Him. Though she misunderstands at first, He reveals her life, showing His divine knowledge. He teaches that true worship is not confined to a place but must be in spirit and truth. Finally, He clearly reveals Himself as the Messiah."
+},
+{
+  "book": "John",
+  "chapter": 4,
+  "start_verse": 27,
+  "end_verse": 42,
+  "text": "The disciples return and marvel that Jesus speaks with a Samaritan woman. She goes to her town and testifies about Him, leading many to come and see. Jesus teaches His disciples about the spiritual harvest, emphasizing that the fields are ready. Many Samaritans believe because of the woman's testimony, and even more believe after hearing Christ themselves."
+},
+{
+  "book": "John",
+  "chapter": 4,
+  "start_verse": 43,
+  "end_verse": 54,
+  "text": "Jesus returns to Galilee, where He heals a nobleman's son from a distance. This miracle demonstrates His authority over sickness and His power beyond physical presence. The nobleman believes, along with his household, showing the power of faith in Christ's word."
+},
 
-  {"book":"John","chapter":4,"start_verse":1,"end_verse":26,"text":"Christ reveals Himself to the Samaritan woman and offers living water."},
-  {"book":"John","chapter":4,"start_verse":27,"end_verse":42,"text":"Many Samaritans believe through the woman's testimony and Christ’s word."},
-  {"book":"John","chapter":4,"start_verse":43,"end_verse":54,"text":"Christ heals the nobleman’s son, showing the power of faith."},
+{
+  "book": "John",
+  "chapter": 5,
+  "start_verse": 1,
+  "end_verse": 15,
+  "text": "Jesus heals a man who had been invalid for thirty-eight years at the pool of Bethesda. He commands him to rise, take up his bed, and walk. This miracle performed on the Sabbath leads to controversy, as the religious leaders focus on the violation of their traditions rather than the mercy shown."
+},
+{
+  "book": "John",
+  "chapter": 5,
+  "start_verse": 16,
+  "end_verse": 30,
+  "text": "Jesus defends His actions by declaring His unity with the Father. He explains that the Son does what He sees the Father doing and has authority to give life and execute judgment. Just as the Father raises the dead, so does the Son. Those who hear His word and believe have eternal life."
+},
+{
+  "book": "John",
+  "chapter": 5,
+  "start_verse": 31,
+  "end_verse": 47,
+  "text": "Jesus presents multiple witnesses to His identity: John the Baptist, His works, the Father, and the Scriptures. Yet the people refuse to come to Him for life. He rebukes their unbelief, showing that they search the Scriptures but fail to recognize that they testify about Him."
+},
 
-  {"book":"John","chapter":5,"start_verse":1,"end_verse":18,"text":"Christ heals at Bethesda and declares His authority equal with the Father."},
-  {"book":"John","chapter":5,"start_verse":19,"end_verse":47,"text":"Christ teaches about His divine authority, judgment, and witness."},
+{
+  "book": "John",
+  "chapter": 6,
+  "start_verse": 1,
+  "end_verse": 21,
+  "text": "Jesus feeds the five thousand with five loaves and two fish, demonstrating His divine provision. Later, He walks on the sea, showing His authority over nature. These signs reveal His identity but are often misunderstood by the crowds."
+},
+{
+  "book": "John",
+  "chapter": 6,
+  "start_verse": 22,
+  "end_verse": 59,
+  "text": "Jesus teaches that He is the Bread of Life. He rebukes the crowd for seeking Him merely for physical food and calls them to believe in Him for eternal life. He explains that His flesh and blood must be received, pointing to the necessity of faith in His sacrifice."
+},
+{
+  "book": "John",
+  "chapter": 6,
+  "start_verse": 60,
+  "end_verse": 71,
+  "text": "Many disciples struggle with Jesus' teaching and turn away. Jesus asks the twelve if they will also leave, and Peter confesses that Jesus has the words of eternal life. Yet even among them is Judas, who would betray Him."
+},
 
-  {"book":"John","chapter":6,"start_verse":1,"end_verse":21,"text":"Christ feeds the five thousand and walks on water."},
-  {"book":"John","chapter":6,"start_verse":22,"end_verse":59,"text":"Christ declares Himself the Bread of Life."},
-  {"book":"John","chapter":6,"start_verse":60,"end_verse":71,"text":"Many disciples turn away, but Peter confesses Christ."},
+{
+  "book": "John",
+  "chapter": 7,
+  "start_verse": 1,
+  "end_verse": 13,
+  "text": "Jesus remains in Galilee because the Jews in Judea seek to kill Him. His brothers urge Him to go publicly to the Feast of Booths, but they do not truly believe in Him. Jesus explains that His time has not yet come, showing His submission to the Father's timing. He eventually goes to the feast quietly. The people are divided in their opinions about Him, some saying He is good, others accusing Him of deception."
+},
+{
+  "book": "John",
+  "chapter": 7,
+  "start_verse": 14,
+  "end_verse": 24,
+  "text": "Jesus begins teaching in the temple, astonishing the people with His knowledge though He had not been formally trained. He explains that His teaching comes from God and that those who desire to do God's will will recognize the truth. He exposes their hypocrisy, particularly regarding their judgment about healing on the Sabbath."
+},
+{
+  "book": "John",
+  "chapter": 7,
+  "start_verse": 25,
+  "end_verse": 36,
+  "text": "The people question whether Jesus might be the Christ, yet they are confused about His origin. Jesus speaks of His divine sending and warns that He will soon depart, and they will not be able to find Him. Their misunderstanding reveals their spiritual blindness."
+},
+{
+  "book": "John",
+  "chapter": 7,
+  "start_verse": 37,
+  "end_verse": 52,
+  "text": "On the last day of the feast, Jesus cries out that whoever thirsts should come to Him and drink, promising the Spirit to those who believe. This causes division among the people. Some believe He is the Christ, while others doubt. The religious leaders reject Him, though Nicodemus cautiously speaks in His defense."
+},
 
-  {"book":"John","chapter":7,"start_verse":1,"end_verse":13,"text":"Jesus goes to the Feast of Booths amid opposition and secrecy."},
-  {"book":"John","chapter":7,"start_verse":14,"end_verse":24,"text":"Christ teaches in the temple with divine authority."},
-  {"book":"John","chapter":7,"start_verse":25,"end_verse":36,"text":"Debate arises about Christ’s identity and origin."},
-  {"book":"John","chapter":7,"start_verse":37,"end_verse":52,"text":"Christ invites all to come to Him for living water."},
+{
+  "book": "John",
+  "chapter": 8,
+  "start_verse": 1,
+  "end_verse": 11,
+  "text": "The scribes and Pharisees bring a woman caught in adultery to Jesus, testing Him. Jesus responds with wisdom, saying that the one without sin should cast the first stone. One by one, they leave. Jesus shows both justice and mercy, telling the woman to go and sin no more."
+},
+{
+  "book": "John",
+  "chapter": 8,
+  "start_verse": 12,
+  "end_verse": 30,
+  "text": "Jesus declares Himself to be the Light of the World. He teaches about His divine origin and warns that those who do not believe will die in their sins. Though challenged by the Pharisees, He affirms His unity with the Father. Many begin to believe in Him."
+},
+{
+  "book": "John",
+  "chapter": 8,
+  "start_verse": 31,
+  "end_verse": 59,
+  "text": "Jesus teaches about true discipleship and freedom, declaring that the truth will set people free. The Jews claim to be Abraham's descendants, but Jesus exposes their spiritual bondage to sin. He reveals that true children of Abraham would follow God's ways. The confrontation intensifies until Jesus declares, 'Before Abraham was, I am,' prompting them to attempt to stone Him."
+},
 
-  {"book":"John","chapter":8,"start_verse":1,"end_verse":11,"text":"The woman caught in adultery is shown mercy."},
-  {"book":"John","chapter":8,"start_verse":12,"end_verse":30,"text":"Christ declares Himself the Light of the world."},
-  {"book":"John","chapter":8,"start_verse":31,"end_verse":59,"text":"Christ teaches truth, freedom, and His eternal existence."},
+{
+  "book": "John",
+  "chapter": 9,
+  "start_verse": 1,
+  "end_verse": 12,
+  "text": "Jesus heals a man born blind, demonstrating that his condition was not due to personal sin but so that God's works might be displayed. He anoints the man's eyes with mud and sends him to wash, resulting in his sight being restored."
+},
+{
+  "book": "John",
+  "chapter": 9,
+  "start_verse": 13,
+  "end_verse": 34,
+  "text": "The Pharisees investigate the healing and question the man and his parents. Despite the man's clear testimony, they refuse to believe. The healed man boldly defends Jesus, exposing their spiritual blindness. Eventually, they cast him out."
+},
+{
+  "book": "John",
+  "chapter": 9,
+  "start_verse": 35,
+  "end_verse": 41,
+  "text": "Jesus finds the man and reveals Himself as the Son of Man. The man believes and worships Him. Jesus explains that His coming brings both sight and blindness—those who think they see are blind, and those who recognize their blindness receive sight."
+},
 
-  {"book":"John","chapter":9,"start_verse":1,"end_verse":12,"text":"Christ heals a man born blind."},
-  {"book":"John","chapter":9,"start_verse":13,"end_verse":34,"text":"The Pharisees question the miracle."},
-  {"book":"John","chapter":9,"start_verse":35,"end_verse":41,"text":"Spiritual blindness is exposed."},
+{
+  "book": "John",
+  "chapter": 10,
+  "start_verse": 1,
+  "end_verse": 21,
+  "text": "Jesus presents Himself as the Good Shepherd who knows His sheep and lays down His life for them. He contrasts Himself with false shepherds who care only for themselves. His sheep hear His voice and follow Him. This teaching causes division among the people."
+},
+{
+  "book": "John",
+  "chapter": 10,
+  "start_verse": 22,
+  "end_verse": 42,
+  "text": "At the Feast of Dedication, Jesus is questioned about whether He is the Christ. He points to His works as evidence and affirms that He and the Father are one. This leads to attempts to stone Him. Many, however, believe in Him, especially recalling the testimony of John the Baptist."
+},
 
-  {"book":"John","chapter":10,"start_verse":1,"end_verse":21,"text":"Christ is the Good Shepherd who lays down His life."},
-  {"book":"John","chapter":10,"start_verse":22,"end_verse":42,"text":"Christ declares unity with the Father."},
+{
+  "book": "John",
+  "chapter": 11,
+  "start_verse": 1,
+  "end_verse": 16,
+  "text": "Lazarus becomes ill, and though Jesus loves him and his sisters, He delays going to them. This delay is purposeful, that God's glory might be revealed. Jesus tells His disciples that Lazarus has died and that He is glad for their sake so that they may believe. Thomas expresses willingness to go and die with Him, showing both devotion and misunderstanding."
+},
+{
+  "book": "John",
+  "chapter": 11,
+  "start_verse": 17,
+  "end_verse": 37,
+  "text": "Jesus arrives in Bethany and meets Martha, who expresses faith mixed with grief. Jesus declares, 'I am the resurrection and the life,' teaching that whoever believes in Him will live even if they die. Mary comes weeping, and Jesus is deeply moved, even to tears, showing both His compassion and His righteous anger at death."
+},
+{
+  "book": "John",
+  "chapter": 11,
+  "start_verse": 38,
+  "end_verse": 57,
+  "text": "Jesus raises Lazarus from the dead, demonstrating His authority over death and revealing His divine glory. Many believe in Him, but others report to the Pharisees. The religious leaders plot to kill Jesus, fearing His influence. Caiaphas unknowingly prophesies that Jesus would die for the nation."
+},
 
-  {"book":"John","chapter":11,"start_verse":1,"end_verse":27,"text":"Lazarus dies and Christ declares Himself the resurrection."},
-  {"book":"John","chapter":11,"start_verse":28,"end_verse":57,"text":"Christ raises Lazarus from the dead."},
+{
+  "book": "John",
+  "chapter": 12,
+  "start_verse": 1,
+  "end_verse": 11,
+  "text": "Mary anoints Jesus with costly perfume, an act of devotion that points to His coming burial. Judas criticizes her, revealing his greed and hypocrisy. Many come to see both Jesus and Lazarus, increasing the leaders' desire to eliminate both."
+},
+{
+  "book": "John",
+  "chapter": 12,
+  "start_verse": 12,
+  "end_verse": 19,
+  "text": "Jesus enters Jerusalem triumphantly, fulfilling prophecy as the people welcome Him with palm branches. Yet their understanding is incomplete, expecting a political Messiah rather than a suffering Savior."
+},
+{
+  "book": "John",
+  "chapter": 12,
+  "start_verse": 20,
+  "end_verse": 36,
+  "text": "Jesus speaks of His impending death, comparing it to a grain of wheat that must die to produce fruit. He calls His followers to self-denial and devotion. A voice from heaven affirms Him, yet many remain confused. He declares Himself the Light, urging belief before darkness overtakes them."
+},
+{
+  "book": "John",
+  "chapter": 12,
+  "start_verse": 37,
+  "end_verse": 50,
+  "text": "Despite many signs, many do not believe, fulfilling Isaiah's prophecy. Some leaders believe but fear confessing it openly. Jesus declares that to believe in Him is to believe in the One who sent Him, and His words will judge those who reject Him."
+},
 
-  {"book":"John","chapter":12,"start_verse":1,"end_verse":19,"text":"Mary anoints Jesus and He enters Jerusalem."},
-  {"book":"John","chapter":12,"start_verse":20,"end_verse":50,"text":"Christ speaks of His death and calls for faith."},
+{
+  "book": "John",
+  "chapter": 13,
+  "start_verse": 1,
+  "end_verse": 20,
+  "text": "At the Last Supper, Jesus washes His disciples' feet, demonstrating humility and servant leadership. He teaches that His followers must do likewise. This act symbolizes spiritual cleansing and the nature of true greatness in His kingdom."
+},
+{
+  "book": "John",
+  "chapter": 13,
+  "start_verse": 21,
+  "end_verse": 30,
+  "text": "Jesus identifies Judas as His betrayer. Despite sharing the meal, Judas departs into the night, illustrating the depth of his betrayal and the darkness of his actions."
+},
+{
+  "book": "John",
+  "chapter": 13,
+  "start_verse": 31,
+  "end_verse": 38,
+  "text": "Jesus speaks of His glorification and gives a new commandment: to love one another as He has loved them. He foretells Peter's denial, showing both His foreknowledge and the weakness of even His closest followers."
+},
 
-  {"book":"John","chapter":13,"start_verse":1,"end_verse":17,"text":"Christ washes the disciples’ feet."},
-  {"book":"John","chapter":13,"start_verse":18,"end_verse":38,"text":"Christ foretells betrayal and denial."},
+{
+  "book": "John",
+  "chapter": 14,
+  "start_verse": 1,
+  "end_verse": 14,
+  "text": "Jesus comforts His disciples, urging them not to be troubled. He promises a place for them in His Father's house and declares Himself to be the way, the truth, and the life. Through Him, they have access to the Father."
+},
+{
+  "book": "John",
+  "chapter": 14,
+  "start_verse": 15,
+  "end_verse": 31,
+  "text": "Jesus promises the Holy Spirit, the Helper, who will dwell with believers and guide them into truth. He assures them of His peace, not as the world gives. He encourages them to trust in Him despite His departure, pointing to the coming work of the Spirit."
+},
+{
+  "book": "John",
+  "chapter": 15,
+  "start_verse": 1,
+  "end_verse": 17,
+  "text": "Jesus declares Himself to be the true vine and His Father the vinedresser. Believers are the branches and must abide in Him to bear fruit. Without Him, they can do nothing. Those who remain in Him will bear much fruit, and this fruit glorifies the Father. He commands them to love one another as He has loved them, defining true love as laying down one's life for others."
+},
+{
+  "book": "John",
+  "chapter": 15,
+  "start_verse": 18,
+  "end_verse": 27,
+  "text": "Jesus warns His disciples that the world will hate them as it hated Him. Their persecution is a result of their association with Christ. He assures them that the Helper, the Spirit of truth, will come and testify about Him, and they too will bear witness."
+},
 
-  {"book":"John","chapter":14,"start_verse":1,"end_verse":14,"text":"Christ comforts His disciples and declares Himself the way."},
-  {"book":"John","chapter":14,"start_verse":15,"end_verse":31,"text":"Promise of the Holy Spirit and peace."},
+{
+  "book": "John",
+  "chapter": 16,
+  "start_verse": 1,
+  "end_verse": 15,
+  "text": "Jesus prepares His disciples for coming persecution and explains the role of the Holy Spirit. The Spirit will convict the world of sin, righteousness, and judgment. He will guide believers into all truth and glorify Christ by revealing Him more fully."
+},
+{
+  "book": "John",
+  "chapter": 16,
+  "start_verse": 16,
+  "end_verse": 33,
+  "text": "Jesus speaks of His departure and the sorrow of His disciples, which will turn to joy. He uses the analogy of childbirth to illustrate this transformation. He assures them of peace in Him, even though they will face trouble in the world, and declares that He has overcome the world."
+},
 
-  {"book":"John","chapter":15,"start_verse":1,"end_verse":17,"text":"Christ is the true vine; believers must abide in Him."},
-  {"book":"John","chapter":15,"start_verse":18,"end_verse":27,"text":"The world hates Christ’s followers."},
+{
+  "book": "John",
+  "chapter": 17,
+  "start_verse": 1,
+  "end_verse": 5,
+  "text": "Jesus begins His high priestly prayer by glorifying the Father and asking to be glorified in return. He speaks of the authority given to Him to grant eternal life to those the Father has given Him."
+},
+{
+  "book": "John",
+  "chapter": 17,
+  "start_verse": 6,
+  "end_verse": 19,
+  "text": "Jesus prays specifically for His disciples, asking the Father to keep them, sanctify them in truth, and protect them from the evil one. He acknowledges that they are in the world but not of it, just as He is not of the world."
+},
+{
+  "book": "John",
+  "chapter": 17,
+  "start_verse": 20,
+  "end_verse": 26,
+  "text": "Jesus extends His prayer to all future believers, asking for unity among them. He desires that they may be one as He and the Father are one, so that the world may believe. He prays that they may behold His glory and be filled with the love of God."
+},
 
-  {"book":"John","chapter":16,"start_verse":1,"end_verse":15,"text":"The Holy Spirit will guide believers into truth."},
-  {"book":"John","chapter":16,"start_verse":16,"end_verse":33,"text":"Christ speaks of sorrow turning to joy and His victory."},
+{
+  "book": "John",
+  "chapter": 18,
+  "start_verse": 1,
+  "end_verse": 14,
+  "text": "Jesus is arrested in the garden. He willingly identifies Himself, causing the arresting party to draw back. Peter attempts to defend Him with a sword, but Jesus submits to the Father's will."
+},
+{
+  "book": "John",
+  "chapter": 18,
+  "start_verse": 15,
+  "end_verse": 27,
+  "text": "Peter follows Jesus at a distance and denies Him three times, fulfilling Jesus' earlier prediction. This highlights human weakness even among devoted followers."
+},
+{
+  "book": "John",
+  "chapter": 18,
+  "start_verse": 28,
+  "end_verse": 40,
+  "text": "Jesus stands before Pilate. Though innocent, He is questioned about His kingship. Pilate finds no fault in Him, yet the crowd chooses Barabbas instead."
+},
 
-  {"book":"John","chapter":17,"start_verse":1,"end_verse":26,"text":"Christ’s high priestly prayer for His people."},
+{
+  "book": "John",
+  "chapter": 19,
+  "start_verse": 1,
+  "end_verse": 16,
+  "text": "Jesus is mocked, scourged, and presented to the people. Pilate struggles but ultimately yields to the crowd's demands, delivering Jesus to be crucified."
+},
+{
+  "book": "John",
+  "chapter": 19,
+  "start_verse": 17,
+  "end_verse": 30,
+  "text": "Jesus is crucified at Golgotha. He bears the sins of the world, fulfilling Scripture. His final words, 'It is finished,' declare the completion of His redemptive work."
+},
+{
+  "book": "John",
+  "chapter": 19,
+  "start_verse": 31,
+  "end_verse": 42,
+  "text": "Jesus' body is taken down and buried. Even in death, Scripture is fulfilled, and His burial is carried out with care and honor."
+},
 
-  {"book":"John","chapter":18,"start_verse":1,"end_verse":27,"text":"Christ is arrested and Peter denies Him."},
-  {"book":"John","chapter":18,"start_verse":28,"end_verse":40,"text":"Christ stands before Pilate."},
+{
+  "book": "John",
+  "chapter": 20,
+  "start_verse": 1,
+  "end_verse": 18,
+  "text": "Jesus rises from the dead, and Mary Magdalene encounters Him at the tomb. Her sorrow turns to joy as she realizes He is alive."
+},
+{
+  "book": "John",
+  "chapter": 20,
+  "start_verse": 19,
+  "end_verse": 31,
+  "text": "Jesus appears to His disciples, granting them peace and commissioning them. Thomas initially doubts but later believes upon seeing Jesus. The chapter concludes by stating the purpose of the Gospel: that people may believe and have life in His name."
+},
 
-  {"book":"John","chapter":19,"start_verse":1,"end_verse":30,"text":"Christ is crucified and dies."},
-  {"book":"John","chapter":19,"start_verse":31,"end_verse":42,"text":"Christ is buried."},
-
-  {"book":"John","chapter":20,"start_verse":1,"end_verse":18,"text":"Christ rises from the dead and appears to Mary."},
-  {"book":"John","chapter":20,"start_verse":19,"end_verse":31,"text":"Christ appears to His disciples and Thomas believes."},
-
-  {"book":"John","chapter":21,"start_verse":1,"end_verse":14,"text":"Christ appears by the sea and provides a miraculous catch."},
-  {"book":"John","chapter":21,"start_verse":15,"end_verse":25,"text":"Christ restores Peter and commissions him."}
+{
+  "book": "John",
+  "chapter": 21,
+  "start_verse": 1,
+  "end_verse": 14,
+  "text": "Jesus appears to His disciples by the Sea of Galilee and performs a miraculous catch of fish. This reinforces His continued provision and presence."
+},
+{
+  "book": "John",
+  "chapter": 21,
+  "start_verse": 15,
+  "end_verse": 25,
+  "text": "Jesus restores Peter after his denial, asking him three times if he loves Him and commissioning him to shepherd His people. The Gospel concludes with a testimony to the vast works of Christ, which could not all be recorded."
+}
 ]
