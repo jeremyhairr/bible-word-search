@@ -252,8 +252,8 @@ def fetch_api_bible(reference, bible_id):
 
 # Homepage (HTML UI)
 @app.get("/")
-def home():
-    return "OK"
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 # 🔍 Search route
