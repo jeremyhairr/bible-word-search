@@ -251,7 +251,7 @@ def fetch_api_bible(reference, bible_id):
 
 
 # Homepage (HTML UI)
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
