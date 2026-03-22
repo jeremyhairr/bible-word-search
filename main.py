@@ -95,7 +95,9 @@ def convert_reference(ref):
     return ref
 
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 app = FastAPI()
 
@@ -287,7 +289,8 @@ class AskRequest(BaseModel):
 @app.post("/ask")
 def ask(request: AskRequest):
     question = request.question
-
+    if not client:
+        return {"answer": "AI not configured"}
     response = client.chat.completions.create(
         model="gpt-5-mini",
         messages=[

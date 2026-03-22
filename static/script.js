@@ -45,8 +45,17 @@ window.readPassage = async function () {
                 verse = parseInt(parts[1]);
             } else if (versePart) {
                 chapter = parseInt(versePart);
-                verse = 1;
+                verse = 1; // 🔥 FORCE verse 1 for chapter-only
             }
+        } 
+
+// 🔥 SAFETY FIX
+        if (!verse || isNaN(verse)) {
+            verse = 1;
+        }
+
+        if (!chapter || isNaN(chapter)) {
+            chapter = 1;
         }
 
         console.log("Parsed:", book, chapter, verse);
