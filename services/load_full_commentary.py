@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DB_PATH = BASE_DIR / "database" / "bible.db"
 JSON_PATH = BASE_DIR / "services" / "data" / "matthew_henry.json"
 PROVERBS_JSON_PATH = BASE_DIR / "services" / "data" / "proverbs_henry.json"
+FIRST_COR_JSON_PATH = "services/data/first_corinthians_henry.json"
 
 
 def insert_commentary(cursor, book, chapter, start, end, text):
@@ -59,6 +60,7 @@ def load_full():
 
     # ✅ Load Proverbs (new)
     total += load_file(cursor, PROVERBS_JSON_PATH)
+    total += load_file(cursor, FIRST_COR_JSON_PATH)
 
     conn.commit()
     conn.close()

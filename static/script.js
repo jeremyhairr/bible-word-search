@@ -4,122 +4,145 @@ console.log("🔥 SCRIPT LOADED 🔥");
 
 // 📖 READ
 window.readPassage = async function () {
-    const ref = document.getElementById("readBox").value.trim();
-    const version = document.getElementById("versionSelect").value;
+  const ref = document.getElementById("readBox").value.trim();
+  const version = document.getElementById("versionSelect").value;
 
-    console.log("Reading:", ref, version);
+  console.log("Reading:", ref, version);
 
-    try {
-        // 📖 1. Fetch Bible passage FIRST
-        const res = await fetch(`/read?reference=${encodeURIComponent(ref)}&version=${version}`);
-        const data = await res.json();
+  try {
+    // 📖 1. Fetch Bible passage FIRST
+    const res = await fetch(
+      `/read?reference=${encodeURIComponent(ref)}&version=${version}`,
+    );
+    const data = await res.json();
 
-        console.log("READ DATA:", data);
+    console.log("READ DATA:", data);
 
-        const readingDiv = document.getElementById("reading");
+    const readingDiv = document.getElementById("reading");
 
-        if (data.error) {
-            readingDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
-            return;
-        }
+    if (data.error) {
+      readingDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
+      return;
+    }
 
-        // 📘 2. Render verse FIRST
-        readingDiv.innerHTML = `
+    // 📘 2. Render verse FIRST
+    readingDiv.innerHTML = `
             <h3>${data.reference}</h3>
             <div class="bible-text">${data.text}</div>
         `;
 
-        // 🔍 3. Parse reference CLEANLY (FIXED)
-        let book = "";
-        let chapter = 1;
-        let verse = 1;
+    // 🔍 3. Parse reference CLEANLY (FIXED)
+    let book = "";
+    let chapter = 1;
+    let verse = 1;
 
-        if (ref.includes(" ")) {
-            const [bookPart, versePart] = ref.split(" ");
+    const parts = ref.trim().split(" ");
 
-            book = bookPart.toLowerCase();
+    if (parts.length >= 2) {
+      // Handle books like "1 Corinthians"
+      if (!isNaN(parts[0])) {
+        // e.g. ["1", "Corinthians", "1:1"]
+        book = (parts[0] + " " + parts[1]).toLowerCase();
 
-            if (versePart && versePart.includes(":")) {
-                const parts = versePart.split(":");
-                chapter = parseInt(parts[0]);
-                verse = parseInt(parts[1]);
-            } else if (versePart) {
-                chapter = parseInt(versePart);
-                verse = 1; // 🔥 FORCE verse 1 for chapter-only
-            }
-        } 
-
-// 🔥 SAFETY FIX
-        if (!verse || isNaN(verse)) {
-            verse = 1;
+        if (parts[2] && parts[2].includes(":")) {
+          const cv = parts[2].split(":");
+          chapter = parseInt(cv[0]);
+          verse = parseInt(cv[1]);
+        } else if (parts[2]) {
+          chapter = parseInt(parts[2]);
+          verse = 1;
         }
+      } else {
+        // e.g. ["John", "3:16"]
+        book = parts[0].toLowerCase();
 
-        if (!chapter || isNaN(chapter)) {
-            chapter = 1;
+        if (parts[1] && parts[1].includes(":")) {
+          const cv = parts[1].split(":");
+          chapter = parseInt(cv[0]);
+          verse = parseInt(cv[1]);
+        } else if (parts[1]) {
+          chapter = parseInt(parts[1]);
+          verse = 1;
         }
+      }
+    }
 
-        console.log("Parsed:", book, chapter, verse);
+    // 🔥 SAFETY FIX
+    if (!verse || isNaN(verse)) {
+      verse = 1;
+    }
 
-        // 📘 4. Fetch commentary
-        if (book && chapter && verse) {
-            const commentaryRes = await fetch(
-                `/commentary?book=${book}&chapter=${chapter}&verse=${verse}`
-            );
+    if (!chapter || isNaN(chapter)) {
+      chapter = 1;
+    }
 
-            const commentaryData = await commentaryRes.json();
+    console.log("Parsed:", book, chapter, verse);
 
-            console.log("COMMENTARY:", commentaryData);
+    // 📘 4. Fetch commentary
+    if (book && chapter && verse) {
+      const commentaryRes = await fetch(
+        `/commentary?book=${book}&chapter=${chapter}&verse=${verse}`,
+      );
 
-            // ➕ 5. Append commentary
-            readingDiv.innerHTML += `
+      const commentaryData = await commentaryRes.json();
+
+      console.log("COMMENTARY:", commentaryData);
+
+      // ➕ 5. Append commentary
+      readingDiv.innerHTML += `
                 <div style="margin-top:20px; padding:10px; border-top:1px solid #ccc;">
                     <h4>📘 Matthew Henry Commentary</h4>
                     ${
-                        commentaryData.commentary.length > 0
-                        ? commentaryData.commentary.map(c => `<p>${c}</p>`).join("")
+                      commentaryData.commentary.length > 0
+                        ? commentaryData.commentary
+                            .map((c) => `<p>${c}</p>`)
+                            .join("")
                         : "<p>No commentary available</p>"
                     }
                 </div>
             `;
-        }
-
-    } catch (err) {
-        console.error("ERROR:", err);
     }
+  } catch (err) {
+    console.error("ERROR:", err);
+  }
 };
 // 🔍 SEARCH
 window.startSearch = function () {
-    currentQuery = document.getElementById("searchBox").value;
-    currentPage = 1;
-    loadPage();
+  currentQuery = document.getElementById("searchBox").value;
+  currentPage = 1;
+  loadPage();
 };
 
-    async function loadPage() {
-    console.log("📄 Loading page:", currentPage);
+async function loadPage() {
+  console.log("📄 Loading page:", currentPage);
 
-    const res = await fetch("/search", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            query: currentQuery,
-            page: currentPage
-        })
-    });
+  const res = await fetch("/search", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: currentQuery,
+      page: currentPage,
+    }),
+  });
 
-    const data = await res.json();
+  const data = await res.json();
 
-    document.getElementById("results").innerHTML = `
+  document.getElementById("results").innerHTML = `
         <h3>Results (Page ${currentPage})</h3>
         ${
-            data.results && data.results.length > 0
-            ? data.results.map(r => `
+          data.results && data.results.length > 0
+            ? data.results
+                .map(
+                  (r) => `
                 <div style="margin-bottom:15px;">
                     <strong>${r.reference}</strong>
                     <p>${r.text}</p>
                 </div>
-            `).join("")
+            `,
+                )
+                .join("")
             : "<p>No results found</p>"
         }
 
@@ -132,43 +155,43 @@ window.startSearch = function () {
 
 // ❓ ASK
 window.askQuestion = async function () {
-    const question = document.getElementById("askBox").value;
+  const question = document.getElementById("askBox").value;
 
-    console.log("Asking:", question);
+  console.log("Asking:", question);
 
-    try {
-        const res = await fetch("/ask", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                question: question
-        })
-        });
+  try {
+    const res = await fetch("/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question: question,
+      }),
+    });
 
-        const data = await res.json();
+    const data = await res.json();
 
-        document.getElementById("askResult").innerHTML = `
+    document.getElementById("askResult").innerHTML = `
             <div style="margin-top: 15px;">
                 <strong>Answer:</strong>
                 <p>${data.answer}</p>
             </div>
         `;
-    } catch (err) {
-        console.error(err);
-        document.getElementById("askResult").innerHTML =
-            `<p style="color:red;">Ask failed</p>`;
-    }
+  } catch (err) {
+    console.error(err);
+    document.getElementById("askResult").innerHTML =
+      `<p style="color:red;">Ask failed</p>`;
+  }
 };
 window.nextPage = function () {
-    currentPage++;
-    loadPage();
+  currentPage++;
+  loadPage();
 };
 
 window.prevPage = function () {
-    if (currentPage > 1) {
-        currentPage--;
-        loadPage();
-    }
+  if (currentPage > 1) {
+    currentPage--;
+    loadPage();
+  }
 };
