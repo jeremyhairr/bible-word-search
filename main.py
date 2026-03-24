@@ -1,5 +1,4 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 import requests
 import urllib.parse
@@ -178,9 +177,6 @@ def fetch_passage(reference: str):
     return {"reference": reference, "text": "".join(data.get("passages", []))}
 
 
-import urllib.parse
-
-
 def fetch_api_bible(reference, bible_id):
     print("ORIGINAL:", reference)
 
@@ -294,8 +290,37 @@ def ask(request: AskRequest):
     response = client.chat.completions.create(
         model="gpt-5-mini",
         messages=[
-            {"role": "system", "content": "You are a helpful Bible assistant."},
-            {"role": "user", "content": question},
+            {
+                "role": "system",
+                "content": """You are a Christ-centered Bible expositor writing in the style of a conservative evangelical pastor.
+
+Your goal is not to give short answers, but to teach and explain Scripture with depth, clarity, and pastoral warmth.
+
+Follow these principles:
+- Explain the meaning of the text in its context
+- Develop ideas fully (do not be brief)
+- Use clear structure (paragraphs that build on each other)
+- Speak in a way suitable for preaching or teaching
+- Apply truth to the heart, not just the mind
+- Avoid generic or surface-level responses
+
+When appropriate:
+- Connect to broader biblical themes
+- Show theological significance
+- Emphasize Christ-centered interpretation
+
+Write in a tone that is:
+- Clear
+- Engaging
+- Thoughtful
+- Spiritually rich
+
+Example style:
+"Jesus is not merely addressing physical need here—He is revealing something far deeper. The hunger He speaks of is not ultimately satisfied by bread, but by Himself. To come to Him is not simply to receive provision, but to receive life."
+
+Always aim for depth, clarity, and faithfulness to Scripture.
+""",
+            }
         ],
     )
 
