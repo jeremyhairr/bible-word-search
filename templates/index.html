@@ -35,6 +35,15 @@
         margin-bottom: 30px;
         font-size: 32px;
       }
+      .font-btn {
+        width: auto;
+        padding: 5px 10px;
+        margin-left: 5px;
+      }
+      .bible-text {
+        line-height: 1.6;
+        font-size: 16px; /* base size */
+      }
       body {
         font-family: Arial;
         padding: 30px;
@@ -69,6 +78,11 @@
 
   <body>
     <h1>📖 Disciple's Source</h1>
+
+    <div style="text-align: right; margin-bottom: 10px">
+      <button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+      <button class="font-btn" onclick="changeFontSize(1)">A+</button>
+    </div>
 
     <!-- READ -->
     <div class="section">

@@ -68,7 +68,7 @@ window.readPassage = async function () {
     // 🖥️ Display verse
     readingDiv.innerHTML = `
       <h3>${data.reference}</h3>
-      <div class="bible-text">${data.text}</div>
+      <div class="bible-text">${cleanText(data.text)}</div>
     `;
 
     // 🔍 Parse reference (FIXED)
@@ -89,7 +89,9 @@ window.readPassage = async function () {
         <h4>📘 Matthew Henry Commentary</h4>
         ${
           commentaryData.commentary && commentaryData.commentary.length > 0
-            ? commentaryData.commentary.map((c) => `<p>${c}</p>`).join("")
+            ? commentaryData.commentary
+                .map((c) => `<p>${cleanText(c)}</p>`)
+                .join("")
             : "<p>No commentary available</p>"
         }
       </div>
@@ -190,3 +192,25 @@ window.prevPage = function () {
     loadPage();
   }
 };
+let currentFontSize = 16;
+
+window.changeFontSize = function (direction) {
+  currentFontSize += direction;
+
+  if (currentFontSize < 12) currentFontSize = 12;
+  if (currentFontSize > 28) currentFontSize = 28;
+
+  const elements = document.querySelectorAll(".bible-text, p");
+
+  elements.forEach((el) => {
+    el.style.fontSize = currentFontSize + "px";
+  });
+};
+
+function cleanText(text) {
+  return text
+    .replace(/\r\n/g, "\n") // normalize line endings
+    .replace(/\n\s*\n/g, "<br><br>") // paragraphs
+    .replace(/\s+/g, " ") // clean extra spaces
+    .trim();
+}
