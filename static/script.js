@@ -150,7 +150,10 @@ async function loadPage() {
 
 // ❓ ASK AI
 window.askQuestion = async function () {
-  const question = document.getElementById("askBox").value;
+  let question = document.getElementById("askBox").value;
+
+  // 🔥 normalize dashes
+  question = question.replace(/–/g, "-").replace(/\s+/g, " ").trim();
 
   console.log("Asking:", question);
 
