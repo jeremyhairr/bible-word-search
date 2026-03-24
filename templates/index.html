@@ -1,83 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>Bible App</title>
+  <head>
+    <title>Disciple's Source</title>
+    <!-- iPhone Home Screen Icon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/static/goose_quill.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/static/goose_quill.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/static/goose_quill.png"
+    />
 
+    <!-- Browser Tab Icon (Favicon) -->
+    <link rel="icon" type="image/png" href="/static/icon.png" />
+
+    <!-- Optional: Make it feel like an app on iPhone -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Disciple's Source" />
     <style>
-        body {
-            font-family: Arial;
-            padding: 30px;
-            max-width: 800px;
-            margin: auto;
-        }
+      body {
+        font-family: Arial;
+        padding: 30px;
+        max-width: 800px;
+        margin: auto;
+      }
 
-        input, select, button {
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-        }
+      input,
+      select,
+      button {
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+      }
 
-        button {
-            background: #333;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+      button {
+        background: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
 
-        button:hover {
-            background: #555;
-        }
+      button:hover {
+        background: #555;
+      }
 
-        .section {
-            margin-top: 30px;
-        }
+      .section {
+        margin-top: 30px;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
+    <h1>📖 Disciple's Source</h1>
 
-<h1>📖 Bible App</h1>
+    <!-- READ -->
+    <div class="section">
+      <h2>Read Passage</h2>
 
-<!-- READ -->
-<div class="section">
-    <h2>Read Passage</h2>
-
-    <select id="versionSelect">
+      <select id="versionSelect">
         <option value="esv">ESV</option>
         <option value="csb">CSB</option>
-    </select>
+      </select>
 
-    <input id="readBox" placeholder="John 3 or Psalm 23" />
+      <input id="readBox" placeholder="John 3 or Psalm 23" />
 
-    <button onclick="readPassage()">Read Passage</button>
+      <button onclick="readPassage()">Read Passage</button>
 
-    <div id="reading"></div>
-</div>
+      <div id="reading"></div>
+    </div>
 
-<!-- SEARCH -->
-<div class="section">
-    <h2>Search</h2>
+    <!-- SEARCH -->
+    <div class="section">
+      <h2>Search</h2>
 
-    <input id="searchBox" placeholder="Search word..." />
+      <input id="searchBox" placeholder="Search word..." />
 
-    <button onclick="startSearch()">Search</button>
+      <button onclick="startSearch()">Search</button>
 
-    <div id="results"></div>
-</div>
+      <div id="results"></div>
+    </div>
 
-<!-- ASK -->
-<div class="section">
-    <h2>Ask (AI)</h2>
+    <!-- ASK -->
+    <div class="section">
+      <h2>Ask (AI)</h2>
 
-    <input id="askBox" placeholder="Ask a question..." />
+      <input id="askBox" placeholder="Ask a question..." />
 
-    <button onclick="askQuestion()">Ask</button>
+      <button onclick="askQuestion()">Ask</button>
 
-    <div id="askResult"></div>
-</div>
+      <div id="askResult"></div>
+    </div>
 
-<!-- ONLY SCRIPT -->
-<script src="/static/script.js"></script>
-
-</body>
+    <!-- ONLY SCRIPT -->
+    <script src="/static/script.js"></script>
+  </body>
 </html>
