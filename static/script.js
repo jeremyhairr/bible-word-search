@@ -1,6 +1,15 @@
 let currentQuery = "";
 let currentPage = 1;
 
+function cleanText(text) {
+  return text
+    .replace(/\r\n/g, "\n") // normalize line endings
+    .replace(/\n\s*\n/g, "<br><br>") // paragraphs
+    .replace(/\n/g, "<br>") // single line breaks
+    .replace(/[ \t]+/g, " ") // clean ONLY spaces/tabs
+    .trim();
+}
+
 console.log("🔥 SCRIPT LOADED 🔥");
 
 // 🔥 GLOBAL PARSER (IMPORTANT — must be OUTSIDE functions)
@@ -87,20 +96,20 @@ window.readPassage = async function () {
     readingDiv.innerHTML += `
       <div style="margin-top:20px; padding:10px; border-top:1px solid #ccc;">
         <h4>📘 Matthew Henry Commentary</h4>
-        ${
-          commentaryData.commentary && commentaryData.commentary.length > 0
-            ? commentaryData.commentary
-                .map(
-                  (c) => `
+    ${
+      commentaryData.commentary && commentaryData.commentary.length > 0
+        ? commentaryData.commentary
+            .map(
+              (c) => `
                     <div style="margin-bottom:15px;">
                         <strong>${c.source}</strong>
                         <p>${cleanText(c.text)}</p>
                     </div>
                 `,
-                )
-                .join("")
-            : "<p>No commentary available</p>"
-        }
+            )
+            .join("")
+        : "<p>No commentary available</p>"
+    }
       </div>
     `;
   } catch (err) {
@@ -216,11 +225,3 @@ window.changeFontSize = function (direction) {
     el.style.fontSize = currentFontSize + "px";
   });
 };
-
-function cleanText(text) {
-  return text
-    .replace(/\r\n/g, "\n") // normalize line endings
-    .replace(/\n\s*\n/g, "<br><br>") // paragraphs
-    .replace(/\s+/g, " ") // clean extra spaces
-    .trim();
-}
