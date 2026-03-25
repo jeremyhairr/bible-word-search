@@ -35,6 +35,34 @@
         margin-bottom: 30px;
         font-size: 32px;
       }
+      .section-card {
+        background: #e8e5e5;
+        padding: 20px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-card h2 {
+        margin-bottom: 15px;
+      }
+      .commentary-toggle {
+        margin: 15px 0;
+      }
+
+      .commentary-toggle h2 {
+        margin-bottom: 10px;
+      }
+
+      .commentary-toggle label {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .commentary-toggle input[type="checkbox"] {
+        transform: scale(1.6);
+        margin-right: 6px;
+      }
       .font-btn {
         width: auto;
         padding: 5px 10px;
@@ -85,7 +113,7 @@
     </div>
 
     <!-- READ -->
-    <div class="section">
+    <div class="section-card">
       <h2>Read Passage</h2>
 
       <select id="versionSelect">
@@ -96,12 +124,24 @@
       <input id="readBox" placeholder="John 3 or Psalm 23" />
 
       <button onclick="readPassage()">Read Passage</button>
+      <div class="section-card">
+        <h2>Show Commentary</h2>
 
+        <label>
+          <input type="checkbox" id="henryToggle" checked />
+          Henry
+        </label>
+
+        <label>
+          <input type="checkbox" id="calvinToggle" checked />
+          Calvin
+        </label>
+      </div>
       <div id="reading"></div>
     </div>
 
     <!-- SEARCH -->
-    <div class="section">
+    <div class="section-card">
       <h2>Search</h2>
 
       <input id="searchBox" placeholder="Search word..." />
@@ -112,7 +152,7 @@
     </div>
 
     <!-- ASK -->
-    <div class="section">
+    <div class="section-card">
       <h2>Ask (AI)</h2>
 
       <input id="askBox" placeholder="Ask a question..." />

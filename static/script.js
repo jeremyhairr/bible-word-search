@@ -96,20 +96,29 @@ window.readPassage = async function () {
     readingDiv.innerHTML += `
       <div style="margin-top:20px; padding:10px; border-top:1px solid #ccc;">
         <h4>📘 Matthew Henry Commentary</h4>
-    ${
-      commentaryData.commentary && commentaryData.commentary.length > 0
-        ? commentaryData.commentary
+    ${(() => {
+      const showHenry = document.getElementById("henryToggle").checked;
+      const showCalvin = document.getElementById("calvinToggle").checked;
+
+      const filtered = commentaryData.commentary.filter((c) => {
+        if (c.source === "Henry" && showHenry) return true;
+        if (c.source === "Calvin" && showCalvin) return true;
+        return false;
+      });
+
+      return filtered.length > 0
+        ? filtered
             .map(
               (c) => `
-                    <div style="margin-bottom:15px;">
-                        <strong>${c.source}</strong>
-                        <p>${cleanText(c.text)}</p>
-                    </div>
-                `,
+          <div style="margin-bottom:15px;">
+            <strong>${c.source}</strong>
+            <p>${cleanText(c.text)}</p>
+          </div>
+        `,
             )
             .join("")
-        : "<p>No commentary available</p>"
-    }
+        : "<p>No commentary available</p>";
+    })()}
       </div>
     `;
   } catch (err) {
@@ -225,3 +234,10 @@ window.changeFontSize = function (direction) {
     el.style.fontSize = currentFontSize + "px";
   });
 };
+document.getElementById("henryToggle").addEventListener("change", () => {
+  readPassage();
+});
+
+document.getElementById("calvinToggle").addEventListener("change", () => {
+  readPassage();
+});
