@@ -90,7 +90,14 @@ window.readPassage = async function () {
         ${
           commentaryData.commentary && commentaryData.commentary.length > 0
             ? commentaryData.commentary
-                .map((c) => `<p>${cleanText(c)}</p>`)
+                .map(
+                  (c) => `
+                    <div style="margin-bottom:15px;">
+                        <strong>${c.source}</strong>
+                        <p>${cleanText(c.text)}</p>
+                    </div>
+                `,
+                )
                 .join("")
             : "<p>No commentary available</p>"
         }

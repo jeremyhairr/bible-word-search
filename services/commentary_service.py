@@ -23,16 +23,16 @@ def get_commentary(book, chapter, verse):
 
     cursor.execute(
         """
-        SELECT text FROM commentary
-        WHERE LOWER(book) = ?
-        AND chapter = ?
-        AND verse_start <= ?
-        AND verse_end >= ?
-        """,
-        (book.lower(), chapter, verse, verse),
+    SELECT text, source FROM commentary
+    WHERE LOWER(book)=?
+    AND chapter=?
+    AND start_verse <= ?
+    AND end_verse >= ?
+    """,
+        (book, chapter, verse, verse),
     )
 
     results = cursor.fetchall()
     conn.close()
 
-    return [r["text"] for r in results]
+    return [{"text": row[0], "source": row[1]} for row in results]
