@@ -255,7 +255,7 @@ window.searchTheology = async function () {
           <div class="card" style="margin-top:15px;">
             <strong>${r.source} – ${r.work}</strong>
             <p>${r.book}, ${r.chapter}, ${r.section}</p>
-            <p>${r.text}</p>
+            <p>${cleanText(r.text)}</p>
           </div>
         `,
             )
