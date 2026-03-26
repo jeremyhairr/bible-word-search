@@ -1,4 +1,5 @@
 console.log("SCRIPT FULLY LOADED");
+
 let currentQuery = "";
 let currentPage = 1;
 
@@ -78,10 +79,11 @@ window.readPassage = async function () {
       <h3>${data.reference}</h3>
       <div class="bible-text">${cleanText(data.text)}</div>
 
-      <div style="margin-top:10px;">
-       <button onclick="speakText('.bible-text')">🔊 Listen</button>
-      <button onclick="stopAudio()">⏹ Stop</button>
-      </div>
+      
+        <button onclick="speakText('.bible-text')">🔊 Listen</button>
+        <button onclick="stopAudio()">⏹ Stop</button>
+
+        
     `;
 
     // Parse reference
@@ -106,9 +108,11 @@ window.readPassage = async function () {
       <h3>Henry</h3>
       <p>${cleanText(commentaryData.henry)}</p>
 
-      <div style="margin-top:8px;">
-        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+      <div style="margin-top:10px;">
+       <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
         <button onclick="stopAudio()">⏹ Stop</button>
+
+        
       </div>
       </div>
   `;
@@ -120,9 +124,11 @@ window.readPassage = async function () {
       <h3>Calvin</h3>
       <p>${cleanText(commentaryData.calvin)}</p>
 
-      <div style="margin-top:8px;">
+      <div style="margin-top:10px;">
         <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
         <button onclick="stopAudio()">⏹ Stop</button>
+
+        
       </div>
       </div>
   `;
@@ -280,9 +286,11 @@ window.searchTheology = async function () {
       <p>${r.book}, ${r.chapter}, ${r.section}</p>
       <p>${cleanText(r.text)}</p>
 
-      <div style="margin-top:8px;">
+      <div style="margin-top:10px;">
         <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
         <button onclick="stopAudio()">⏹ Stop</button>
+
+        
       </div>
     </div>
   `,
@@ -297,13 +305,20 @@ window.searchTheology = async function () {
 };
 
 // ✅ NOW add listeners AFTER function exists
-document
-  .getElementById("berkhofTheologyToggle")
-  .addEventListener("change", searchTheology);
-
-document
-  .getElementById("calvinTheologyToggle")
-  .addEventListener("change", searchTheology);
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("henryToggle")
+    ?.addEventListener("change", readPassage);
+  document
+    .getElementById("calvinToggle")
+    ?.addEventListener("change", readPassage);
+  document
+    .getElementById("berkhofTheologyToggle")
+    ?.addEventListener("change", searchTheology);
+  document
+    .getElementById("calvinTheologyToggle")
+    ?.addEventListener("change", searchTheology);
+});
 
 function speakText(target) {
   let el;
@@ -319,7 +334,8 @@ function speakText(target) {
   const text = el.innerText;
 
   const speech = new SpeechSynthesisUtterance(text);
-  speech.rate = 1;
+  const rateSelect = document.getElementById("speechRate");
+  speech.rate = rateSelect ? parseFloat(rateSelect.value) : 1;
   speech.pitch = 1;
 
   window.speechSynthesis.cancel();
