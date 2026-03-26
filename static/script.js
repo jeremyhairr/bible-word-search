@@ -149,6 +149,31 @@ window.readPassage = async function () {
   }
 };
 
+// 🔥 Load Bible in a Year plan
+
+window.loadYearPlan = async function () {
+  try {
+    const res = await fetch("/reading-plan/year");
+    const data = await res.json();
+
+    console.log("YEAR PLAN:", data);
+
+    // display readings
+    document.getElementById("yearPlanDisplay").innerHTML = `
+      <p><strong>Today’s Readings:</strong></p>
+      <ul>
+        ${data.readings.map((r) => `<li>${r}</li>`).join("")}
+      </ul>
+    `;
+
+    // 🔥 load FIRST passage automatically
+    document.getElementById("readBox").value = data.readings[0];
+    readPassage();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // 🔍 SEARCH
 window.startSearch = function () {
   currentQuery = document.getElementById("searchBox").value;

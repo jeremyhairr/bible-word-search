@@ -7,6 +7,8 @@ from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 from pydantic import BaseModel
 from database.db import get_connection
+import json
+from datetime import datetime
 
 BOOK_MAP = {
     "genesis": "GEN",
@@ -273,6 +275,17 @@ def read(reference: str, version: str = "esv"):
     return fetch_api_bible(reference, bible_id)
 
     # -----------------------------
+
+
+@app.get("/reading-plan/year")
+def get_year_plan():
+    with open("services/data/bible_year_plan.json", "r") as f:
+        plan = json.load(f)
+
+    today = datetime.now().timetuple().tm_yday  # 1–365
+    index = (today - 1) % len(plan)
+
+    return plan[index]
 
 
 # ❓ ASK ROUTE
