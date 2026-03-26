@@ -6,6 +6,7 @@ import os
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 from pydantic import BaseModel
+from database.db import get_connection
 
 BOOK_MAP = {
     "genesis": "GEN",
@@ -335,10 +336,47 @@ def test():
     return {"status": "working"}
 
 
-from services.commentary_service import get_commentary
-
-
 @app.get("/commentary")
-def commentary(book: str, chapter: int, verse: int):
-    results = get_commentary(book.lower(), chapter, verse)
-    return {"commentary": results}
+def commentary_route(
+    reference: str = None,
+    book: str = None,
+    chapter: int = None,
+    verse: int = None,
+):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    book = book.capitalize()
+
+    # Henry
+    cursor.execute(
+        """
+    SELECT text FROM commentary
+    WHERE LOWER(book)=LOWER(?) 
+    AND chapter=? 
+    AND start_verse <= ? AND end_verse >= ?
+    AND LOWER(source)=LOWER(?)
+    """,
+        (book, chapter, verse, verse, "Henry"),
+    )
+    henry_row = cursor.fetchone()
+
+    # Calvin
+    cursor.execute(
+        """
+    SELECT text FROM commentary
+    WHERE LOWER(book)=LOWER(?) 
+    AND chapter=? 
+    AND start_verse <= ? AND end_verse >= ?
+    AND LOWER(source)=LOWER(?)
+    """,
+        (book, chapter, verse, verse, "Calvin"),
+    )
+    calvin_row = cursor.fetchone()
+
+    conn.close()
+
+    return {
+        "henry": henry_row["text"] if henry_row else None,
+        "calvin": calvin_row["text"] if calvin_row else None,
+    }

@@ -3,16 +3,16 @@ let currentPage = 1;
 
 function cleanText(text) {
   return text
-    .replace(/\r\n/g, "\n") // normalize line endings
-    .replace(/\n\s*\n/g, "<br><br>") // paragraphs
-    .replace(/\n/g, "<br>") // single line breaks
-    .replace(/[ \t]+/g, " ") // clean ONLY spaces/tabs
+    .replace(/\r\n/g, "\n")
+    .replace(/\n\s*\n/g, "<br><br>")
+    .replace(/\n/g, "<br>")
+    .replace(/[ \t]+/g, " ")
     .trim();
 }
 
 console.log("🔥 SCRIPT LOADED 🔥");
 
-// 🔥 GLOBAL PARSER (IMPORTANT — must be OUTSIDE functions)
+// 🔥 GLOBAL PARSER
 function parseReference(ref) {
   const parts = ref.trim().split(" ");
 
@@ -22,7 +22,6 @@ function parseReference(ref) {
 
   if (parts.length >= 2) {
     if (!isNaN(parts[0])) {
-      // Handles "1 Corinthians 1:1"
       book = (parts[0] + " " + parts[1]).toLowerCase();
 
       if (parts[2] && parts[2].includes(":")) {
@@ -34,7 +33,6 @@ function parseReference(ref) {
         verse = 1;
       }
     } else {
-      // Handles "John 3:16"
       book = parts[0].toLowerCase();
 
       if (parts[1] && parts[1].includes(":")) {
@@ -74,17 +72,16 @@ window.readPassage = async function () {
       return;
     }
 
-    // 🖥️ Display verse
+    // Display passage
     readingDiv.innerHTML = `
       <h3>${data.reference}</h3>
       <div class="bible-text">${cleanText(data.text)}</div>
     `;
 
-    // 🔍 Parse reference (FIXED)
+    // Parse reference
     const parsed = parseReference(ref);
-    console.log("Parsed:", parsed);
 
-    // 📘 Fetch commentary
+    // Fetch commentary
     const commentaryRes = await fetch(
       `/commentary?book=${encodeURIComponent(parsed.book)}&chapter=${parsed.chapter}&verse=${parsed.verse}`,
     );
@@ -92,33 +89,33 @@ window.readPassage = async function () {
     const commentaryData = await commentaryRes.json();
     console.log("COMMENTARY:", commentaryData);
 
-    // 🖥️ Display commentary
+    const showHenry = document.getElementById("henryToggle").checked;
+    const showCalvin = document.getElementById("calvinToggle").checked;
+
+    let commentaryHTML = "";
+
+    if (showHenry && commentaryData.henry) {
+      commentaryHTML += `
+        <div class="card">
+          <h3>Henry</h3>
+          <p>${cleanText(commentaryData.henry)}</p>
+        </div>
+      `;
+    }
+
+    if (showCalvin && commentaryData.calvin) {
+      commentaryHTML += `
+        <div class="card">
+          <h3>Calvin</h3>
+          <p>${cleanText(commentaryData.calvin)}</p>
+        </div>
+      `;
+    }
+
     readingDiv.innerHTML += `
       <div style="margin-top:20px; padding:10px; border-top:1px solid #ccc;">
-        <h4>📘 Matthew Henry Commentary</h4>
-    ${(() => {
-      const showHenry = document.getElementById("henryToggle").checked;
-      const showCalvin = document.getElementById("calvinToggle").checked;
-
-      const filtered = commentaryData.commentary.filter((c) => {
-        if (c.source === "Henry" && showHenry) return true;
-        if (c.source === "Calvin" && showCalvin) return true;
-        return false;
-      });
-
-      return filtered.length > 0
-        ? filtered
-            .map(
-              (c) => `
-          <div style="margin-bottom:15px;">
-            <strong>${c.source}</strong>
-            <p>${cleanText(c.text)}</p>
-          </div>
-        `,
-            )
-            .join("")
-        : "<p>No commentary available</p>";
-    })()}
+        <h4>📘 Commentary</h4>
+        ${commentaryHTML || "<p>No commentary available</p>"}
       </div>
     `;
   } catch (err) {
@@ -177,10 +174,7 @@ async function loadPage() {
 window.askQuestion = async function () {
   let question = document.getElementById("askBox").value;
 
-  // 🔥 normalize dashes
   question = question.replace(/–/g, "-").replace(/\s+/g, " ").trim();
-
-  console.log("Asking:", question);
 
   try {
     const res = await fetch("/ask", {
@@ -188,9 +182,7 @@ window.askQuestion = async function () {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        question: question,
-      }),
+      body: JSON.stringify({ question }),
     });
 
     const data = await res.json();
@@ -208,7 +200,7 @@ window.askQuestion = async function () {
   }
 };
 
-// 📄 Pagination
+// Pagination
 window.nextPage = function () {
   currentPage++;
   loadPage();
@@ -220,6 +212,8 @@ window.prevPage = function () {
     loadPage();
   }
 };
+
+// Font size
 let currentFontSize = 16;
 
 window.changeFontSize = function (direction) {
@@ -234,10 +228,7 @@ window.changeFontSize = function (direction) {
     el.style.fontSize = currentFontSize + "px";
   });
 };
-document.getElementById("henryToggle").addEventListener("change", () => {
-  readPassage();
-});
 
-document.getElementById("calvinToggle").addEventListener("change", () => {
-  readPassage();
-});
+// Toggle listeners
+document.getElementById("henryToggle").addEventListener("change", readPassage);
+document.getElementById("calvinToggle").addEventListener("change", readPassage);
