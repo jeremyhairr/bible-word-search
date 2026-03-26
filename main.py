@@ -336,6 +336,27 @@ def test():
     return {"status": "working"}
 
 
+@app.get("/theology")
+def search_theology(query: str):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT source, work, book, chapter, section, text
+        FROM theology
+        WHERE text LIKE ?
+        LIMIT 50
+        """,
+        (f"%{query}%",),
+    )
+
+    results = cursor.fetchall()
+    conn.close()
+
+    return {"results": [dict(r) for r in results]}
+
+
 @app.get("/commentary")
 def commentary_route(
     reference: str = None,

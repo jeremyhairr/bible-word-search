@@ -232,3 +232,38 @@ window.changeFontSize = function (direction) {
 // Toggle listeners
 document.getElementById("henryToggle").addEventListener("change", readPassage);
 document.getElementById("calvinToggle").addEventListener("change", readPassage);
+
+window.searchTheology = async function () {
+  const query = document.getElementById("theologyBox").value.trim();
+
+  console.log("THEOLOGY SEARCH:", query);
+
+  if (!query) return;
+
+  try {
+    const res = await fetch(`/theology?query=${encodeURIComponent(query)}`);
+
+    const data = await res.json();
+
+    console.log("THEOLOGY DATA:", data);
+
+    document.getElementById("theologyResults").innerHTML =
+      data.results.length > 0
+        ? data.results
+            .map(
+              (r) => `
+          <div class="card" style="margin-top:15px;">
+            <strong>${r.source} – ${r.work}</strong>
+            <p>${r.book}, ${r.chapter}, ${r.section}</p>
+            <p>${r.text}</p>
+          </div>
+        `,
+            )
+            .join("")
+        : "<p>No results found</p>";
+  } catch (err) {
+    console.error(err);
+    document.getElementById("theologyResults").innerHTML =
+      `<p style="color:red;">Search failed</p>`;
+  }
+};
