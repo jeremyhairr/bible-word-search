@@ -77,6 +77,11 @@ window.readPassage = async function () {
     readingDiv.innerHTML = `
       <h3>${data.reference}</h3>
       <div class="bible-text">${cleanText(data.text)}</div>
+
+      <div style="margin-top:10px;">
+       <button onclick="speakText('.bible-text')">🔊 Listen</button>
+      <button onclick="stopAudio()">⏹ Stop</button>
+      </div>
     `;
 
     // Parse reference
@@ -97,20 +102,30 @@ window.readPassage = async function () {
 
     if (showHenry && commentaryData.henry) {
       commentaryHTML += `
-        <div class="card">
-          <h3>Henry</h3>
-          <p>${cleanText(commentaryData.henry)}</p>
-        </div>
-      `;
+    <div class="card">
+      <h3>Henry</h3>
+      <p>${cleanText(commentaryData.henry)}</p>
+
+      <div style="margin-top:8px;">
+        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+        <button onclick="stopAudio()">⏹ Stop</button>
+      </div>
+      </div>
+  `;
     }
 
     if (showCalvin && commentaryData.calvin) {
       commentaryHTML += `
-        <div class="card">
-          <h3>Calvin</h3>
-          <p>${cleanText(commentaryData.calvin)}</p>
-        </div>
-      `;
+    <div class="card">
+      <h3>Calvin</h3>
+      <p>${cleanText(commentaryData.calvin)}</p>
+
+      <div style="margin-top:8px;">
+        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+        <button onclick="stopAudio()">⏹ Stop</button>
+      </div>
+      </div>
+  `;
     }
 
     readingDiv.innerHTML += `
@@ -260,12 +275,17 @@ window.searchTheology = async function () {
         ? filtered
             .map(
               (r) => `
-          <div class="card" style="margin-top:15px;">
-            <strong>${r.source} – ${r.work}</strong>
-            <p>${r.book}, ${r.chapter}, ${r.section}</p>
-            <p>${cleanText(r.text)}</p>
-          </div>
-        `,
+    <div class="card" style="margin-top:15px;">
+      <strong>${r.source} – ${r.work}</strong>
+      <p>${r.book}, ${r.chapter}, ${r.section}</p>
+      <p>${cleanText(r.text)}</p>
+
+      <div style="margin-top:8px;">
+        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+        <button onclick="stopAudio()">⏹ Stop</button>
+      </div>
+    </div>
+  `,
             )
             .join("")
         : "<p>No results found</p>";
@@ -284,3 +304,28 @@ document
 document
   .getElementById("calvinTheologyToggle")
   .addEventListener("change", searchTheology);
+
+function speakText(target) {
+  let el;
+
+  if (typeof target === "string") {
+    el = document.querySelector(target);
+  } else {
+    el = target; // already an element
+  }
+
+  if (!el) return;
+
+  const text = el.innerText;
+
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.rate = 1;
+  speech.pitch = 1;
+
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(speech);
+}
+
+function stopAudio() {
+  window.speechSynthesis.cancel();
+}
