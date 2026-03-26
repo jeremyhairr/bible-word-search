@@ -1,3 +1,4 @@
+console.log("SCRIPT FULLY LOADED");
 let currentQuery = "";
 let currentPage = 1;
 
@@ -232,7 +233,6 @@ window.changeFontSize = function (direction) {
 // Toggle listeners
 document.getElementById("henryToggle").addEventListener("change", readPassage);
 document.getElementById("calvinToggle").addEventListener("change", readPassage);
-
 window.searchTheology = async function () {
   const query = document.getElementById("theologyBox").value.trim();
 
@@ -242,14 +242,22 @@ window.searchTheology = async function () {
 
   try {
     const res = await fetch(`/theology?query=${encodeURIComponent(query)}`);
-
     const data = await res.json();
 
-    console.log("THEOLOGY DATA:", data);
+    const showBerkhof = document.getElementById(
+      "berkhofTheologyToggle",
+    ).checked;
+    const showCalvin = document.getElementById("calvinTheologyToggle").checked;
+
+    const filtered = data.results.filter((r) => {
+      if (r.source === "Berkhof" && showBerkhof) return true;
+      if (r.source === "Calvin" && showCalvin) return true;
+      return false;
+    });
 
     document.getElementById("theologyResults").innerHTML =
-      data.results.length > 0
-        ? data.results
+      filtered.length > 0
+        ? filtered
             .map(
               (r) => `
           <div class="card" style="margin-top:15px;">
@@ -267,3 +275,12 @@ window.searchTheology = async function () {
       `<p style="color:red;">Search failed</p>`;
   }
 };
+
+// ✅ NOW add listeners AFTER function exists
+document
+  .getElementById("berkhofTheologyToggle")
+  .addEventListener("change", searchTheology);
+
+document
+  .getElementById("calvinTheologyToggle")
+  .addEventListener("change", searchTheology);

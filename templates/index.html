@@ -151,11 +151,25 @@
       <div id="results"></div>
     </div>
 
-    <!--THEOLOGY-->
-
     <div class="section-card">
       <h2>Theology</h2>
 
+      <!-- Toggles -->
+      <div style="margin: 15px 0; font-size: 14px">
+        <strong>Show Theological Work:</strong>
+
+        <label style="margin-left: 10px">
+          <input type="checkbox" id="berkhofTheologyToggle" checked />
+          Berkhof
+        </label>
+
+        <label style="margin-left: 10px">
+          <input type="checkbox" id="calvinTheologyToggle" checked />
+          Calvin
+        </label>
+      </div>
+
+      <!-- Search -->
       <input
         id="theologyBox"
         placeholder="Search Institutes, Berkhof, etc..."
@@ -163,7 +177,8 @@
 
       <button onclick="searchTheology()">Search</button>
 
-      <div id="theologyResults"></div>
+      <!-- Results -->
+      <div id="theologyResults" style="margin-top: 15px"></div>
     </div>
 
     <!-- ASK -->
