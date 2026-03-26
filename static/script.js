@@ -80,9 +80,10 @@ window.readPassage = async function () {
       <div class="bible-text">${cleanText(data.text)}</div>
 
       
-        <button onclick="speakText('.bible-text')">🔊 Listen</button>
+        <button onclick="speakText('.bible-text')">▶️ Play</button>
+        <button onclick="pauseAudio()">⏸ Pause</button>
+        <button onclick="resumeAudio()">▶️ Resume</button>
         <button onclick="stopAudio()">⏹ Stop</button>
-
         
     `;
 
@@ -109,7 +110,9 @@ window.readPassage = async function () {
       <p>${cleanText(commentaryData.henry)}</p>
 
       <div style="margin-top:10px;">
-       <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+        <button onclick="speakText(this.closest('.card'))">▶️ Play</button>
+        <button onclick="pauseAudio()">⏸ Pause</button>
+        <button onclick="resumeAudio()">▶️ Resume</button>
         <button onclick="stopAudio()">⏹ Stop</button>
 
         
@@ -125,9 +128,10 @@ window.readPassage = async function () {
       <p>${cleanText(commentaryData.calvin)}</p>
 
       <div style="margin-top:10px;">
-        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
-        <button onclick="stopAudio()">⏹ Stop</button>
-
+        <button onclick="speakText(this.closest('.card'))">▶️ Play</button>
+        <button onclick="pauseAudio()">⏸ Pause</button>
+        <button onclick="resumeAudio()">▶️ Resume</button>
+  <button onclick="stopAudio()">⏹ Stop</button>
         
       </div>
       </div>
@@ -287,7 +291,9 @@ window.searchTheology = async function () {
       <p>${cleanText(r.text)}</p>
 
       <div style="margin-top:10px;">
-        <button onclick="speakText(this.closest('.card'))">🔊 Listen</button>
+        <button onclick="speakText(this.closest('.card'))">▶️ Play</button>
+        <button onclick="pauseAudio()">⏸ Pause</button>
+        <button onclick="resumeAudio()">▶️ Resume</button>
         <button onclick="stopAudio()">⏹ Stop</button>
 
         
@@ -320,28 +326,37 @@ document.addEventListener("DOMContentLoaded", function () {
     ?.addEventListener("change", searchTheology);
 });
 
-function speakText(target) {
-  let el;
+let currentSpeech = null;
 
-  if (typeof target === "string") {
-    el = document.querySelector(target);
-  } else {
-    el = target; // already an element
-  }
+function speakText(target) {
+  let el = typeof target === "string" ? document.querySelector(target) : target;
 
   if (!el) return;
 
   const text = el.innerText;
 
   const speech = new SpeechSynthesisUtterance(text);
+
   const rateSelect = document.getElementById("speechRate");
   speech.rate = rateSelect ? parseFloat(rateSelect.value) : 1;
+
   speech.pitch = 1;
 
-  window.speechSynthesis.cancel();
+  currentSpeech = speech;
+
+  window.speechSynthesis.cancel(); // stop anything else
   window.speechSynthesis.speak(speech);
+}
+
+function pauseAudio() {
+  window.speechSynthesis.pause();
+}
+
+function resumeAudio() {
+  window.speechSynthesis.resume();
 }
 
 function stopAudio() {
   window.speechSynthesis.cancel();
+  currentSpeech = null;
 }
