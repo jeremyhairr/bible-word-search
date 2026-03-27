@@ -150,7 +150,6 @@ window.readPassage = async function () {
 };
 
 // 🔥 Load Bible in a Year plan
-
 window.loadYearPlan = async function () {
   try {
     const res = await fetch("/reading-plan/year");
@@ -158,22 +157,106 @@ window.loadYearPlan = async function () {
 
     console.log("YEAR PLAN:", data);
 
-    // display readings
+    window.currentReadings = data.readings;
+    window.currentDay = data.day;
+    localStorage.setItem("currentDay", data.day);
+
     document.getElementById("yearPlanDisplay").innerHTML = `
-      <p><strong>Today’s Readings:</strong></p>
+      <p><strong>Today's Readings:</strong></p>
       <ul>
-        ${data.readings.map((r) => `<li>${r}</li>`).join("")}
+        ${data.readings
+          .map((r, i) => {
+            const key = `reading-${data.day}-${i}`;
+            const checked = localStorage.getItem(key) === "true";
+
+            return `
+            <li>
+              <input type="checkbox"
+                     ${checked ? "checked" : ""}
+                     onchange="toggleReading('${key}', this.checked)" />
+
+              <span style="
+                cursor:pointer;
+                text-decoration:${checked ? "line-through" : "underline"};
+                opacity:${checked ? "0.6" : "1"};
+              "
+              onclick="loadReading('${r}')">
+                ${r}
+              </span>
+            </li>
+          `;
+          })
+          .join("")}
       </ul>
     `;
 
-    // 🔥 load FIRST passage automatically
     document.getElementById("readBox").value = data.readings[0];
     readPassage();
   } catch (err) {
     console.error(err);
   }
 };
+function loadNextDay(day) {
+  fetch("/reading-plan/year?day=" + day)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("NEXT DAY:", data);
 
+      window.currentReadings = data.readings;
+      window.currentDay = data.day;
+      localStorage.setItem("currentDay", data.day);
+
+      document.getElementById("yearPlanDisplay").innerHTML = `
+  <div style="margin-bottom:10px;">
+    <button onclick="loadPrevDay()">⬅ Previous</button>
+    <button onclick="loadNextDay(window.currentDay + 1)">Next ➡</button>
+  </div>
+
+  <p><strong>Day ${data.day}</strong></p>
+  <p><strong>Today's Readings:</strong></p>
+
+  <ul>
+    ${data.readings
+      .map((r, i) => {
+        const key = `reading-${data.day}-${i}`;
+        const checked = localStorage.getItem(key) === "true";
+
+        return `
+        <li>
+          <input type="checkbox"
+                 ${checked ? "checked" : ""}
+                 onchange="toggleReading('${key}', this.checked)" />
+
+          <span style="cursor:pointer; text-decoration:${checked ? "line-through" : "underline"}; opacity:${checked ? "0.6" : "1"};"
+                onclick="loadReading('${r}')">
+            ${r}
+          </span>
+        </li>
+      `;
+      })
+      .join("")}
+  </ul>
+`;
+
+      // ✅ NOW inside correct scope
+      document.getElementById("readBox").value = data.readings[0];
+      readPassage();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+window.loadPrevDay = function () {
+  const day = parseInt(window.currentDay);
+
+  if (!day || day <= 1) {
+    console.log("Already at Day 1");
+    return;
+  }
+
+  console.log("Going back to:", day - 1);
+  loadNextDay(day - 1);
+};
 // 🔍 SEARCH
 window.startSearch = function () {
   currentQuery = document.getElementById("searchBox").value;
@@ -385,3 +468,43 @@ function stopAudio() {
   window.speechSynthesis.cancel();
   currentSpeech = null;
 }
+function toggleReading(key, value) {
+  localStorage.setItem(key, value);
+
+  // extract day
+  const parts = key.split("-");
+  const day = parseInt(parts[1]);
+
+  const readings = window.currentReadings || [];
+
+  // 🔥 check if ALL are checked
+  let allChecked = true;
+
+  for (let i = 0; i < readings.length; i++) {
+    const k = `reading-${day}-${i}`;
+    if (localStorage.getItem(k) !== "true") {
+      allChecked = false;
+      break;
+    }
+  }
+
+  // 🚀 trigger next day
+  if (allChecked) {
+    console.log("DAY COMPLETE → loading next day");
+    loadNextDay(day + 1);
+  }
+}
+
+function loadReading(ref) {
+  document.getElementById("readBox").value = ref;
+  readPassage();
+}
+window.addEventListener("DOMContentLoaded", function () {
+  const savedDay = localStorage.getItem("currentDay");
+
+  if (savedDay) {
+    loadNextDay(parseInt(savedDay));
+  } else {
+    loadYearPlan(); // default to today
+  }
+});

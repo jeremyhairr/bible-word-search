@@ -278,12 +278,15 @@ def read(reference: str, version: str = "esv"):
 
 
 @app.get("/reading-plan/year")
-def get_year_plan():
+def get_year_plan(day: int = None):
     with open("services/data/bible_year_plan.json", "r") as f:
         plan = json.load(f)
 
-    today = datetime.now().timetuple().tm_yday  # 1–365
-    index = (today - 1) % len(plan)
+    if day:
+        index = (day - 1) % len(plan)
+    else:
+        today = datetime.now().timetuple().tm_yday
+        index = (today - 1) % len(plan)
 
     return plan[index]
 
