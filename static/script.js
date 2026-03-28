@@ -443,19 +443,30 @@ function speakText(target) {
 
   const text = el.innerText;
 
+  if (!text || text.trim() === "") return;
+
   const speech = new SpeechSynthesisUtterance(text);
+
+  const voices = speechSynthesis.getVoices();
+
+  let selectedIndex = document.getElementById("voiceSelect")?.value;
+  selectedIndex = parseInt(selectedIndex);
+
+  if (voices.length > 0) {
+    speech.voice = voices[selectedIndex] || voices[0];
+  }
 
   const rateSelect = document.getElementById("speechRate");
   speech.rate = rateSelect ? parseFloat(rateSelect.value) : 1;
 
   speech.pitch = 1;
+  speech.volume = 1;
 
   currentSpeech = speech;
 
-  window.speechSynthesis.cancel(); // stop anything else
+  window.speechSynthesis.cancel();
   window.speechSynthesis.speak(speech);
 }
-
 function pauseAudio() {
   window.speechSynthesis.pause();
 }
@@ -468,6 +479,33 @@ function stopAudio() {
   window.speechSynthesis.cancel();
   currentSpeech = null;
 }
+
+function populateVoices() {
+  const voices = speechSynthesis.getVoices();
+  const select = document.getElementById("voiceSelect");
+
+  if (!select) return;
+
+  // 🔥 WAIT until voices exist
+  if (voices.length === 0) {
+    console.log("Waiting for voices...");
+    setTimeout(populateVoices, 200);
+    return;
+  }
+
+  select.innerHTML = voices
+    .map((v, i) => `<option value="${i}">${v.name}</option>`)
+    .join("");
+
+  console.log("VOICES LOADED:", voices);
+
+  // Optional: auto-select best
+  const preferred = voices.find((v) => v.name.includes("Google"));
+  if (preferred) {
+    select.value = voices.indexOf(preferred);
+  }
+}
+
 function toggleReading(key, value) {
   localStorage.setItem(key, value);
 
@@ -508,3 +546,5 @@ window.addEventListener("DOMContentLoaded", function () {
     loadYearPlan(); // default to today
   }
 });
+speechSynthesis.onvoiceschanged = populateVoices;
+populateVoices();
